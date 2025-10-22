@@ -1,0 +1,340 @@
+{% extends 'core/base.html' %}
+
+{% block title %}{{ task.title }} - Ken{% endblock %}
+
+{% block content %}
+<div class="pb-20 md:pb-6">
+    
+    <div class="mb-6">
+        <a href="{% url 'task_list' %}" class="text-primary hover:text-green-400 transition inline-flex items-center mb-4">
+            <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
+            </svg>
+            Back to Tasks
+        </a>
+        <h1 class="text-3xl font-bold text-white font-slab mb-2">{{ task.title }}</h1>
+    </div>
+    
+    <div class="max-w-4xl mx-auto">
+        
+        <div class="space-y-6">
+            
+            <div class="card p-6 rounded-xl">
+                <div class="flex items-center space-x-3 mb-6">
+                    {% if task.task_type == 'watch' %}
+                    <div class="w-14 h-14 bg-blue-900/30 rounded-full flex items-center justify-center">
+                        <svg class="w-7 h-7 text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z"/>
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                        </svg>
+                    </div>
+                    {% elif task.task_type == 'like' %}
+                    <div class="w-14 h-14 bg-pink-900/30 rounded-full flex items-center justify-center">
+                        <svg class="w-7 h-7 text-pink-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 10h4.764a2 2 0 011.789 2.894l-3.5 7A2 2 0 0115.263 21h-4.017c-.163 0-.326-.02-.485-.06L7 20m7-10V5a2 2 0 00-2-2h-.095c-.5 0-.905.405-.905.905 0 .714-.211 1.412-.608 2.006L7 11v9m7-10h-2M7 20H5a2 2 0 01-2-2v-6a2 2 0 012-2h2.5"/>
+                        </svg>
+                    </div>
+                    {% elif task.task_type == 'subscribe' %}
+                    <div class="w-14 h-14 bg-red-900/30 rounded-full flex items-center justify-center">
+                        <svg class="w-7 h-7 text-red-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M18 9v3m0 0v3m0-3h3m-3 0h-3m-2-5a4 4 0 11-8 0 4 4 0 018 0zM3 20a6 6 0 0112 0v1H3v-1z"/>
+                        </svg>
+                    </div>
+                    {% endif %}
+                    <div>
+                        <span class="px-3 py-1 bg-primary/20 text-primary rounded-full text-xs font-bold">
+                            {{ task.get_task_type_display }}
+                        </span>
+                        <h2 class="text-2xl font-bold text-white mt-2 font-slab">{{ task.title }}</h2>
+                    </div>
+                </div>
+                
+                <div class="space-y-4 mb-6">
+                    <div class="flex items-start space-x-3 p-4 bg-gray-900 rounded-lg">
+                        <svg class="w-6 h-6 text-primary flex-shrink-0 mt-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                        </svg>
+                        <div>
+                            <h3 class="font-bold text-white mb-2">Instructions</h3>
+                            {% if task.task_type == 'watch' %}
+                            <p class="text-gray-400 text-sm">1. Click the link below to open the video</p>
+                            <p class="text-gray-400 text-sm">2. Watch the video for at least {{ task.duration_seconds }} seconds</p>
+                            <p class="text-gray-400 text-sm">3. Come back and click "Complete Task"</p>
+                            {% elif task.task_type == 'like' %}
+                            <p class="text-gray-400 text-sm">1. Click the link below to open the video</p>
+                            <p class="text-gray-400 text-sm">2. Like the video</p>
+                            <p class="text-gray-400 text-sm">3. Come back and click "Complete Task"</p>
+                            {% elif task.task_type == 'subscribe' %}
+                            <p class="text-gray-400 text-sm">1. Click the link below to open the channel</p>
+                            <p class="text-gray-400 text-sm">2. Subscribe to the channel</p>
+                            <p class="text-gray-400 text-sm">3. Come back and click "Complete Task"</p>
+                            {% endif %}
+                        </div>
+                    </div>
+                    
+                    <div class="p-4 bg-primary/10 border border-primary/30 rounded-lg">
+                        <p class="text-gray-300 text-sm">
+                            <svg class="w-5 h-5 inline text-primary mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/>
+                            </svg>
+                            Make sure to complete the action before submitting, incomplete tasks will not be rewarded.
+                        </p>
+                    </div>
+                </div>
+                
+                {% if task.task_type == 'watch' %}
+                <div class="mb-6">
+                    <div class="relative bg-gray-900 rounded-xl overflow-hidden mb-3" style="padding-bottom: 56.25%;">
+                        <div id="player" class="absolute top-0 left-0 w-full h-full"></div>
+                    </div>
+                    <div id="watchProgress" class="bg-gray-900 rounded-lg p-4">
+                        <div class="flex items-center justify-between mb-2">
+                            <span class="text-gray-400 text-sm flex items-center">
+                                <span id="playStatus" class="inline-block w-2 h-2 bg-gray-500 rounded-full mr-2"></span>
+                                Watch Progress
+                            </span>
+                            <span class="font-bold" id="timeRemaining">Loading...</span>
+                        </div>
+                        <div class="w-full bg-gray-700 rounded-full h-3">
+                            <div id="progressBar" class="bg-primary rounded-full h-3 transition-all" style="width: 0%"></div>
+                        </div>
+                    </div>
+                </div>
+                {% else %}
+                <div class="mb-6">
+                    <a href="{{ task.video_url }}" target="_blank" rel="noopener noreferrer" class="btn-primary w-full py-4 rounded-xl font-bold text-black text-lg flex items-center justify-center space-x-2">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/>
+                        </svg>
+                        <span>Open Link</span>
+                    </a>
+                </div>
+                {% endif %}
+            </div>
+            
+            <div class="card p-8 rounded-xl">
+                <div class="flex items-center justify-between mb-8">
+                    <div class="text-center flex-1">
+                        <p class="text-gray-400 text-sm mb-2">You'll Earn</p>
+                        <p class="text-primary font-bold text-4xl">+{{ task.points }}</p>
+                        <p class="text-gray-500 text-sm mt-1">{{ task.cfa_value }} CFA</p>
+                    </div>
+                    <div class="w-px h-16 bg-gray-700"></div>
+                    <div class="text-center flex-1">
+                        <p class="text-gray-400 text-sm mb-2">Completed</p>
+                        <p class="text-white font-bold text-2xl">{{ task.current_completions }}/{{ task.max_completions }}</p>
+                        <div class="w-full bg-gray-700 rounded-full h-2 mt-2">
+                            <div class="bg-primary rounded-full h-2" style="width: {% widthratio task.current_completions task.max_completions 100 %}%"></div>
+                        </div>
+                    </div>
+                </div>
+                
+                {% if already_completed %}
+                <div class="bg-gray-800 border border-gray-700 text-gray-400 py-4 rounded-xl font-bold text-center">
+                    <svg class="w-6 h-6 inline mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                    </svg>
+                    Already Completed
+                </div>
+                {% else %}
+                    {% if task.task_type == 'watch' %}
+                    <form method="post" action="{% url 'complete_task' task.id %}" id="watchTaskForm">
+                        {% csrf_token %}
+                        <button type="submit" id="completeWatchBtn" disabled class="w-full py-4 rounded-xl font-bold text-lg transition bg-gray-700 text-gray-500 cursor-not-allowed">
+                            <svg class="w-6 h-6 inline mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/>
+                            </svg>
+                            Watch Full Video to Complete
+                        </button>
+                    </form>
+                    {% elif task.task_type == 'like' or task.task_type == 'subscribe' or task.task_type == 'question' %}
+                    <form method="post" action="{% url 'complete_task' task.id %}" enctype="multipart/form-data" id="completionForm">
+                        {% csrf_token %}
+                        <div class="mb-4">
+                            <label class="block text-white text-sm font-bold mb-3">
+                                <svg class="w-5 h-5 inline mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/>
+                                </svg>
+                                Upload Proof (Required)
+                            </label>
+                            <div class="bg-gray-900 border-2 border-dashed border-gray-700 rounded-xl p-6 text-center hover:border-primary transition cursor-pointer" id="uploadArea">
+                                <input type="file" name="proof_screenshot" id="proof_screenshot_input" accept="image/*" required class="hidden">
+                                <div id="uploadPlaceholder">
+                                    <svg class="w-12 h-12 text-gray-600 mx-auto mb-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"/>
+                                    </svg>
+                                    <p class="text-gray-400 text-sm">Click to upload screenshot</p>
+                                    <p class="text-gray-600 text-xs mt-2">PNG, JPG up to 10MB</p>
+                                </div>
+                                <div id="imagePreview" class="hidden">
+                                    <img id="preview" src="" alt="Preview" class="max-w-full h-48 mx-auto rounded-lg mb-3">
+                                    <p class="text-primary text-sm font-bold" id="fileName"></p>
+                                </div>
+                            </div>
+                        </div>
+                        <button type="submit" class="btn-primary w-full py-4 rounded-xl font-bold text-black text-lg hover:scale-105 transition">
+                            Submit Task
+                        </button>
+                    </form>
+                    {% else %}
+                    <form method="post" action="{% url 'complete_task' task.id %}">
+                        {% csrf_token %}
+                        <button type="submit" class="btn-primary w-full py-4 rounded-xl font-bold text-black text-lg hover:scale-105 transition">
+                            Complete Task
+                        </button>
+                    </form>
+                    {% endif %}
+                {% endif %}
+            </div>
+            
+        </div>
+        
+    </div>
+    
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script src="https://www.youtube.com/iframe_api"></script>
+<script>
+    const uploadArea = document.getElementById('uploadArea');
+    const input = document.getElementById('proof_screenshot_input');
+    const uploadPlaceholder = document.getElementById('uploadPlaceholder');
+    const imagePreview = document.getElementById('imagePreview');
+    const preview = document.getElementById('preview');
+    const fileName = document.getElementById('fileName');
+    
+    if (uploadArea && input) {
+        uploadArea.addEventListener('click', () => {
+            input.click();
+        });
+        
+        input.addEventListener('change', function(e) {
+            const file = e.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(event) {
+                    preview.src = event.target.result;
+                    fileName.textContent = file.name;
+                    uploadPlaceholder.classList.add('hidden');
+                    imagePreview.classList.remove('hidden');
+                }
+                reader.readAsDataURL(file);
+            }
+        });
+    }
+    
+    let player;
+    let videoDuration = 0;
+    let hasWatchedFull = false;
+    let trackingInterval = null;
+    
+    const completeBtn = document.getElementById('completeWatchBtn');
+    const progressBar = document.getElementById('progressBar');
+    const timeRemaining = document.getElementById('timeRemaining');
+    const playStatus = document.getElementById('playStatus');
+    
+    const videoUrl = '{{ task.video_url }}';
+    let videoId = '';
+    
+    if (videoUrl.includes('shorts/')) {
+        videoId = videoUrl.split('shorts/')[1].split('?')[0];
+    } else if (videoUrl.includes('watch?v=')) {
+        videoId = videoUrl.split('watch?v=')[1].split('&')[0];
+    } else if (videoUrl.includes('youtu.be/')) {
+        videoId = videoUrl.split('youtu.be/')[1].split('?')[0];
+    }
+    
+    function onYouTubeIframeAPIReady() {
+        player = new YT.Player('player', {
+            videoId: videoId,
+            playerVars: {
+                'playsinline': 1,
+                'rel': 0,
+                'modestbranding': 1
+            },
+            events: {
+                'onReady': onPlayerReady,
+                'onStateChange': onPlayerStateChange
+            }
+        });
+    }
+    
+    function onPlayerReady(event) {
+        videoDuration = Math.floor(player.getDuration());
+        timeRemaining.textContent = 'Press play to start';
+        timeRemaining.classList.add('text-gray-400');
+    }
+    
+    function onPlayerStateChange(event) {
+        if (event.data == YT.PlayerState.PLAYING) {
+            playStatus.classList.remove('bg-gray-500');
+            playStatus.classList.add('bg-green-500', 'animate-pulse');
+            startTracking();
+        } else if (event.data == YT.PlayerState.PAUSED) {
+            if (trackingInterval) {
+                clearInterval(trackingInterval);
+                trackingInterval = null;
+            }
+            playStatus.classList.remove('animate-pulse');
+        } else if (event.data == YT.PlayerState.ENDED) {
+            if (trackingInterval) {
+                clearInterval(trackingInterval);
+                trackingInterval = null;
+            }
+            if (!hasWatchedFull) {
+                hasWatchedFull = true;
+                enableComplete();
+            }
+        }
+    }
+    
+    function startTracking() {
+        if (trackingInterval) return;
+        
+        trackingInterval = setInterval(function() {
+            if (player && player.getPlayerState() == YT.PlayerState.PLAYING) {
+                const currentTime = Math.floor(player.getCurrentTime());
+                const duration = Math.floor(player.getDuration());
+                const progress = Math.min((currentTime / duration) * 100, 100);
+                
+                progressBar.style.width = progress + '%';
+                
+                const remaining = Math.max(duration - currentTime, 0);
+                timeRemaining.textContent = remaining + 's remaining';
+                timeRemaining.classList.remove('text-gray-400');
+                timeRemaining.classList.add('text-primary');
+                
+                if (currentTime >= duration - 2 && !hasWatchedFull) {
+                    hasWatchedFull = true;
+                    enableComplete();
+                }
+            }
+        }, 500);
+    }
+    
+    function enableComplete() {
+        if (trackingInterval) {
+            clearInterval(trackingInterval);
+        }
+        completeBtn.disabled = false;
+        completeBtn.classList.remove('bg-gray-700', 'text-gray-500', 'cursor-not-allowed');
+        completeBtn.classList.add('btn-primary', 'text-black', 'hover:scale-105');
+        completeBtn.innerHTML = `
+            <svg class="w-6 h-6 inline mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+            </svg>
+            Complete Task & Claim Reward
+        `;
+        timeRemaining.textContent = 'Completed!';
+        playStatus.classList.remove('animate-pulse', 'bg-green-500');
+        playStatus.classList.add('bg-primary');
+    }
+    
+    if (typeof YT !== 'undefined' && YT.loaded) {
+        onYouTubeIframeAPIReady();
+    } else {
+        window.onYouTubeIframeAPIReady = onYouTubeIframeAPIReady;
+    }
+</script>
+{% endblock %}

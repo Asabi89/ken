@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ken - Earn Money Online</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href='https://cdn.boxicons.com/fonts/basic/boxicons.min.css' rel='stylesheet'>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#32CD32',
+                        dark: '#121212',
+                    },
+                    fontFamily: {
+                        'sans': ['Inter', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        
+        .btn-primary {
+            background: #32CD32;
+            transition: all 0.3s ease;
+        }
+        
+        .btn-primary:hover {
+            background: #28a428;
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(50, 205, 50, 0.3);
+        }
+        
+        .hero-image {
+            animation: float 6s ease-in-out infinite;
+        }
+        
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+        }
+        
+        .fade-in {
+            animation: fadeIn 1s ease-in;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+<body class="bg-black text-white antialiased">
+    
+    <!-- Navigation -->
+    <nav class="fixed top-0 left-0 right-0 bg-black/90 backdrop-blur-md border-b border-gray-800 z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3 sm:py-4 flex items-center justify-between">
+            <a href="/" class="text-xl sm:text-2xl font-bold text-primary">Ken</a>
+            <div class="flex items-center space-x-2 sm:space-x-4">
+                <a href="{% url 'login' %}" class="text-sm sm:text-base text-gray-300 hover:text-primary transition px-3 sm:px-4 py-2">Login</a>
+                <a href="{% url 'signup' %}" class="btn-primary text-sm sm:text-base px-4 sm:px-6 py-2 rounded-lg font-medium text-black">Sign Up</a>
+            </div>
+        </div>
+    </nav>
+    
+    <!-- Hero Section - Full Screen -->
+    <section class="relative min-h-screen flex items-center justify-center px-4 sm:px-6 lg:px-8 pt-20 sm:pt-24">
+        <div class="absolute inset-0 z-0">
+            <div class="absolute inset-0 bg-gradient-to-br from-black via-gray-900 to-black"></div>
+            <div class="absolute top-20 right-10 w-64 h-64 sm:w-96 sm:h-96 bg-primary/10 rounded-full blur-3xl"></div>
+            <div class="absolute bottom-20 left-10 w-64 h-64 sm:w-96 sm:h-96 bg-primary/5 rounded-full blur-3xl"></div>
+        </div>
+        
+        <div class="max-w-7xl w-full relative z-10">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-center">
+                <!-- Text Content -->
+                <div class="text-center lg:text-left fade-in">
+                    <h1 class="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-4 sm:mb-6 leading-tight">
+                        Earn Money by Completing <span class="text-primary">Simple Tasks</span>
+                    </h1>
+                    <p class="text-base sm:text-lg md:text-xl text-gray-300 mb-6 sm:mb-8 leading-relaxed">
+                        Watch videos, like content, subscribe to channels and get paid instantly. Turn your time into money with Ken.
+                    </p>
+                    <div class="flex flex-col sm:flex-row items-center justify-center lg:justify-start space-y-3 sm:space-y-0 sm:space-x-4">
+                        <a href="{% url 'signup' %}" class="btn-primary w-full sm:w-auto px-6 sm:px-8 py-3 sm:py-4 rounded-lg font-medium text-black text-sm sm:text-base">
+                            Get Started Now
+                        </a>
+                        <a href="{% url 'login' %}" class="w-full sm:w-auto border-2 border-primary text-primary px-6 sm:px-8 py-3 sm:py-4 rounded-lg font-medium text-sm sm:text-base hover:bg-primary hover:text-black transition text-center">
+                            I Have an Account
+                        </a>
+                    </div>
+                    
+                    <!-- Stats -->
+                    <div class="grid grid-cols-3 gap-4 sm:gap-6 mt-8 sm:mt-12">
+                        <div>
+                            <p class="text-2xl sm:text-3xl md:text-4xl font-bold text-primary">10k+</p>
+                            <p class="text-xs sm:text-sm text-gray-400 mt-1">Active Users</p>
+                        </div>
+                        <div>
+                            <p class="text-2xl sm:text-3xl md:text-4xl font-bold text-primary">50k+</p>
+                            <p class="text-xs sm:text-sm text-gray-400 mt-1">Tasks Done</p>
+                        </div>
+                        <div>
+                            <p class="text-2xl sm:text-3xl md:text-4xl font-bold text-primary">24/7</p>
+                            <p class="text-xs sm:text-sm text-gray-400 mt-1">Support</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Hero Image -->
+                <div class="hidden lg:flex items-center justify-center">
+                    <div class="relative hero-image">
+                        <img src="https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?w=600&h=600&fit=crop" 
+                             alt="Earning Money" 
+                             class="w-full max-w-lg rounded-2xl shadow-2xl">
+                        <div class="absolute -bottom-6 -right-6 bg-primary text-black px-6 py-4 rounded-xl shadow-xl">
+                            <p class="text-sm font-medium">Earn up to</p>
+                            <p class="text-2xl font-bold">50,000 CFA/month</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Section 1: Available Tasks -->
+    <section class="py-16 sm:py-20 lg:py-24 px-4 sm:px-6 lg:px-8 bg-gray-900/30">
+        <div class="max-w-7xl mx-auto">
+            <div class="text-center mb-10 sm:mb-16">
+                <h2 class="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-white mb-3 sm:mb-4">
+                    Available <span class="text-primary">Tasks</span>
+                </h2>
+                <p class="text-sm sm:text-base md:text-lg text-gray-400 max-w-2xl mx-auto">
+                    Choose from a variety of simple tasks and start earning immediately
+                </p>
+            </div>
+            
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 lg:gap-8">
+                <!-- Watch Videos -->
+                <div class="bg-gray-900/50 backdrop-blur p-6 sm:p-8 rounded-xl border border-gray-800 hover:border-primary transition hover:transform hover:scale-105">
+                    <div class="w-14 h-14 sm:w-16 sm:h-16 bg-primary/20 rounded-full flex items-center justify-center mx-auto mb-4 sm:mb-6">
+                        <svg class="w-7 h-7 sm:w-8 sm:h-8 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z"/>
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                        </svg>
+                    </div>
+                    <h3 class="text-lg sm:text-xl font-semibold text-white mb-2 sm:mb-3 text-center">Watch Videos</h3>
+                    <p class="text-sm sm:text-base text-gray-400 mb-4 sm:mb-6 text-center">Watch videos for 50 seconds and earn points instantly</p>
+                    <p class="text-primary font-bold text-2xl sm:text-3xl text-center">10 CFA</p>
+                </div>
+                
+                <!-- Like Content -->
+                <div class="bg-gray-900/50 backdrop-blur p-6 sm:p-8 rounded-xl border border-gray-800 hover:border-primary transition hover:transform hover:scale-105">
+                    <div class="w-14 h-14 sm:w-16 sm:h-16 bg-primary/20 rounded-full flex items-center justify-center mx-auto mb-4 sm:mb-6">
+                        <svg class="w-7 h-7 sm:w-8 sm:h-8 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 10h4.764a2 2 0 011.789 2.894l-3.5 7A2 2 0 0115.263 21h-4.017c-.163 0-.326-.02-.485-.06L7 20m7-10V5a2 2 0 00-2-2h-.095c-.5 0-.905.405-.905.905 0 .714-.211 1.412-.608 2.006L7 11v9m7-10h-2M7 20H5a2 2 0 01-2-2v-6a2 2 0 012-2h2.5"/>
+                        </svg>
+                    </div>
+                    <h3 class="text-lg sm:text-xl font-semibold text-white mb-2 sm:mb-3 text-center">Like Content</h3>
+                    <p class="text-sm sm:text-base text-gray-400 mb-4 sm:mb-6 text-center">Like videos and show your support to earn rewards</p>
+                    <p class="text-primary font-bold text-2xl sm:text-3xl text-center">10 CFA</p>
+                </div>
+                
+                <!-- Subscribe -->
+                <div class="bg-gray-900/50 backdrop-blur p-6 sm:p-8 rounded-xl border border-gray-800 hover:border-primary transition hover:transform hover:scale-105 sm:col-span-2 lg:col-span-1">
+                    <div class="w-14 h-14 sm:w-16 sm:h-16 bg-primary/20 rounded-full flex items-center justify-center mx-auto mb-4 sm:mb-6">
+                        <svg class="w-7 h-7 sm:w-8 sm:h-8 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M18 9v3m0 0v3m0-3h3m-3 0h-3m-2-5a4 4 0 11-8 0 4 4 0 018 0zM3 20a6 6 0 0112 0v1H3v-1z"/>
+                        </svg>
+                    </div>
+                    <h3 class="text-lg sm:text-xl font-semibold text-white mb-2 sm:mb-3 text-center">Subscribe</h3>
+                    <p class="text-sm sm:text-base text-gray-400 mb-4 sm:mb-6 text-center">Subscribe to channels and earn double rewards</p>
+                    <p class="text-primary font-bold text-2xl sm:text-3xl text-center">20 CFA</p>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Section 2: How It Works -->
+    <section class="py-16 sm:py-20 lg:py-24 px-4 sm:px-6 lg:px-8">
+        <div class="max-w-6xl mx-auto">
+            <div class="text-center mb-10 sm:mb-16">
+                <h2 class="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-white mb-3 sm:mb-4">
+                    How It <span class="text-primary">Works</span>
+                </h2>
+                <p class="text-sm sm:text-base md:text-lg text-gray-400 max-w-2xl mx-auto">
+                    Start earning in 4 simple steps
+                </p>
+            </div>
+            
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-8 lg:gap-10">
+                <div class="text-center">
+                    <div class="w-16 h-16 sm:w-20 sm:h-20 bg-primary rounded-full flex items-center justify-center mx-auto mb-4 sm:mb-6 text-xl sm:text-2xl font-bold text-black shadow-lg">1</div>
+                    <h3 class="text-lg sm:text-xl font-semibold text-white mb-2 sm:mb-3">Sign Up</h3>
+                    <p class="text-sm sm:text-base text-gray-400">Create your free account in seconds</p>
+                </div>
+                
+                <div class="text-center">
+                    <div class="w-16 h-16 sm:w-20 sm:h-20 bg-primary rounded-full flex items-center justify-center mx-auto mb-4 sm:mb-6 text-xl sm:text-2xl font-bold text-black shadow-lg">2</div>
+                    <h3 class="text-lg sm:text-xl font-semibold text-white mb-2 sm:mb-3">Complete Tasks</h3>
+                    <p class="text-sm sm:text-base text-gray-400">Choose from available tasks and complete them</p>
+                </div>
+                
+                <div class="text-center">
+                    <div class="w-16 h-16 sm:w-20 sm:h-20 bg-primary rounded-full flex items-center justify-center mx-auto mb-4 sm:mb-6 text-xl sm:text-2xl font-bold text-black shadow-lg">3</div>
+                    <h3 class="text-lg sm:text-xl font-semibold text-white mb-2 sm:mb-3">Earn Points</h3>
+                    <p class="text-sm sm:text-base text-gray-400">Get instant points that convert to cash</p>
+                </div>
+                
+                <div class="text-center">
+                    <div class="w-16 h-16 sm:w-20 sm:h-20 bg-primary rounded-full flex items-center justify-center mx-auto mb-4 sm:mb-6 text-xl sm:text-2xl font-bold text-black shadow-lg">4</div>
+                    <h3 class="text-lg sm:text-xl font-semibold text-white mb-2 sm:mb-3">Withdraw</h3>
+                    <p class="text-sm sm:text-base text-gray-400">Cash out via mobile money (min. 5000 CFA)</p>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Section 3: Why Choose Ken -->
+    <section class="py-16 sm:py-20 lg:py-24 px-4 sm:px-6 lg:px-8 bg-gray-900/30">
+        <div class="max-w-7xl mx-auto">
+            <div class="text-center mb-10 sm:mb-16">
+                <h2 class="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-white mb-3 sm:mb-4">
+                    Why Choose <span class="text-primary">Ken?</span>
+                </h2>
+                <p class="text-sm sm:text-base md:text-lg text-gray-400 max-w-2xl mx-auto">
+                    Join thousands of satisfied users earning daily
+                </p>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
+                <div class="bg-gray-900/50 backdrop-blur p-6 sm:p-8 rounded-xl border border-gray-800">
+                    <div class="text-primary text-3xl sm:text-4xl mb-3 sm:mb-4"><i class='bx  bx-plane-alt'  ></i> </div>
+                    <h3 class="text-lg sm:text-xl font-semibold text-white mb-2 sm:mb-3">Instant Payments</h3>
+                    <p class="text-sm sm:text-base text-gray-400">Receive your earnings immediately after completing tasks</p>
+                </div>
+                
+                <div class="bg-gray-900/50 backdrop-blur p-6 sm:p-8 rounded-xl border border-gray-800">
+                    <div class="text-primary text-3xl sm:text-4xl mb-3 sm:mb-4"><i class='bx  bx-lock'  ></i> </div>
+                    <h3 class="text-lg sm:text-xl font-semibold text-white mb-2 sm:mb-3">Secure Platform</h3>
+                    <p class="text-sm sm:text-base text-gray-400">Your data and earnings are protected with top security</p>
+                </div>
+                
+                <div class="bg-gray-900/50 backdrop-blur p-6 sm:p-8 rounded-xl border border-gray-800">
+                    <div class="text-primary text-3xl sm:text-4xl mb-3 sm:mb-4"><i class='bx  bx-mobile-back-alt'  ></i> </div>
+                    <h3 class="text-lg sm:text-xl font-semibold text-white mb-2 sm:mb-3">Mobile Friendly</h3>
+                    <p class="text-sm sm:text-base text-gray-400">Work from anywhere using your phone or computer</p>
+                </div>
+                
+                <div class="bg-gray-900/50 backdrop-blur p-6 sm:p-8 rounded-xl border border-gray-800">
+                    <div class="text-primary text-3xl sm:text-4xl mb-3 sm:mb-4"><i class='bx  bx-dollar-circle'  ></i> </div>
+                    <h3 class="text-lg sm:text-xl font-semibold text-white mb-2 sm:mb-3">No Investment</h3>
+                    <p class="text-sm sm:text-base text-gray-400">Start earning without any upfront cost or fees</p>
+                </div>
+                
+                <div class="bg-gray-900/50 backdrop-blur p-6 sm:p-8 rounded-xl border border-gray-800">
+                    <div class="text-primary text-3xl sm:text-4xl mb-3 sm:mb-4"><i class='bx  bx-globe'  ></i> </div>
+                    <h3 class="text-lg sm:text-xl font-semibold text-white mb-2 sm:mb-3">Global Access</h3>
+                    <p class="text-sm sm:text-base text-gray-400">Available worldwide, earn in your local currency</p>
+                </div>
+                
+                <div class="bg-gray-900/50 backdrop-blur p-6 sm:p-8 rounded-xl border border-gray-800">
+                    <div class="text-primary text-3xl sm:text-4xl mb-3 sm:mb-4"><i class='bx  bx-checkbox-checked'  ></i> </div>
+                    <h3 class="text-lg sm:text-xl font-semibold text-white mb-2 sm:mb-3">Simple Tasks</h3>
+                    <p class="text-sm sm:text-base text-gray-400">Easy tasks that anyone can complete quickly</p>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Section 4: Testimonials -->
+    <section class="py-16 sm:py-20 lg:py-24 px-4 sm:px-6 lg:px-8">
+        <div class="max-w-6xl mx-auto">
+            <div class="text-center mb-10 sm:mb-16">
+                <h2 class="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-white mb-3 sm:mb-4">
+                    What Our <span class="text-primary">Users Say</span>
+                </h2>
+                <p class="text-sm sm:text-base md:text-lg text-gray-400 max-w-2xl mx-auto">
+                    Real stories from real people earning with Ken
+                </p>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
+                <div class="bg-gray-900/50 backdrop-blur p-6 sm:p-8 rounded-xl border border-gray-800">
+                    <div class="flex items-center mb-4">
+                        <div class="w-10 h-10 sm:w-12 sm:h-12 bg-primary rounded-full flex items-center justify-center text-black font-bold text-sm sm:text-base">AM</div>
+                        <div class="ml-3 sm:ml-4">
+                            <p class="text-sm sm:text-base font-semibold text-white">Amadou M.</p>
+                            <p class="text-xs sm:text-sm text-gray-400">Student</p>
+                        </div>
+                    </div>
+                    <p class="text-sm sm:text-base text-gray-300">Ken helped me earn extra money while studying. The tasks are simple and payments are fast!</p>
+                </div>
+                
+                <div class="bg-gray-900/50 backdrop-blur p-6 sm:p-8 rounded-xl border border-gray-800">
+                    <div class="flex items-center mb-4">
+                        <div class="w-10 h-10 sm:w-12 sm:h-12 bg-primary rounded-full flex items-center justify-center text-black font-bold text-sm sm:text-base">FS</div>
+                        <div class="ml-3 sm:ml-4">
+                            <p class="text-sm sm:text-base font-semibold text-white">Fatou S.</p>
+                            <p class="text-xs sm:text-sm text-gray-400">Entrepreneur</p>
+                        </div>
+                    </div>
+                    <p class="text-sm sm:text-base text-gray-300">I've earned over 100,000 CFA in just 3 months! This platform is legit and trustworthy.</p>
+                </div>
+                
+                <div class="bg-gray-900/50 backdrop-blur p-6 sm:p-8 rounded-xl border border-gray-800 md:col-span-2 lg:col-span-1">
+                    <div class="flex items-center mb-4">
+                        <div class="w-10 h-10 sm:w-12 sm:h-12 bg-primary rounded-full flex items-center justify-center text-black font-bold text-sm sm:text-base">ID</div>
+                        <div class="ml-3 sm:ml-4">
+                            <p class="text-sm sm:text-base font-semibold text-white">Ibrahim D.</p>
+                            <p class="text-xs sm:text-sm text-gray-400">Freelancer</p>
+                        </div>
+                    </div>
+                    <p class="text-sm sm:text-base text-gray-300">Perfect side hustle! I complete tasks during my free time and the money adds up quickly.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Section 5: Call to Action -->
+    <section class="py-16 sm:py-20 lg:py-24 px-4 sm:px-6 lg:px-8 bg-gradient-to-r from-gray-900 via-black to-gray-900">
+        <div class="max-w-4xl mx-auto text-center">
+            <h2 class="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-white mb-4 sm:mb-6">
+                Ready to Start <span class="text-primary">Earning?</span>
+            </h2>
+            <p class="text-sm sm:text-base md:text-lg lg:text-xl text-gray-300 mb-8 sm:mb-12">
+                Join thousands of users already making money with Ken
+            </p>
+            <a href="{% url 'signup' %}" class="btn-primary inline-block px-8 sm:px-12 lg:px-16 py-3 sm:py-4 lg:py-5 rounded-lg font-medium text-black text-sm sm:text-base lg:text-lg shadow-2xl">
+                Create Your Account
+            </a>
+            <p class="text-xs sm:text-sm text-gray-400 mt-4 sm:mt-6">No credit card required • Start earning in minutes</p>
+        </div>
+    </section>
+    
+    <!-- Footer -->
+    <footer class="border-t border-gray-800 py-6 sm:py-8 px-4 sm:px-6 lg:px-8">
+        <div class="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between space-y-4 md:space-y-0">
+            <p class="text-xs sm:text-sm text-gray-400">
+                © {% now "Y" %} Ken. All rights reserved.
+            </p>
+            <div class="flex items-center space-x-4 sm:space-x-6">
+                <a href="#" class="text-gray-400 hover:text-primary transition" aria-label="Facebook">
+                    <svg class="w-5 h-5 sm:w-6 sm:h-6" fill="currentColor" viewBox="0 0 24 24">
+                        <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
+                    </svg>
+                </a>
+                <a href="#" class="text-gray-400 hover:text-primary transition" aria-label="Twitter">
+                    <svg class="w-5 h-5 sm:w-6 sm:h-6" fill="currentColor" viewBox="0 0 24 24">
+                        <path d="M23.953 4.57a10 10 0 01-2.825.775 4.958 4.958 0 002.163-2.723c-.951.555-2.005.959-3.127 1.184a4.92 4.92 0 00-8.384 4.482C7.69 8.095 4.067 6.13 1.64 3.162a4.822 4.822 0 00-.666 2.475c0 1.71.87 3.213 2.188 4.096a4.904 4.904 0 01-2.228-.616v.06a4.923 4.923 0 003.946 4.827 4.996 4.996 0 01-2.212.085 4.936 4.936 0 004.604 3.417 9.867 9.867 0 01-6.102 2.105c-.39 0-.779-.023-1.17-.067a13.995 13.995 0 007.557 2.209c9.053 0 13.998-7.496 13.998-13.985 0-.21 0-.42-.015-.63A9.935 9.935 0 0024 4.59z"/>
+                    </svg>
+                </a>
+                <a href="#" class="text-gray-400 hover:text-primary transition" aria-label="Instagram">
+                    <svg class="w-5 h-5 sm:w-6 sm:h-6" fill="currentColor" viewBox="0 0 24 24">
+                        <path d="M12 0C8.74 0 8.333.015 7.053.072 5.775.132 4.905.333 4.14.63c-.789.306-1.459.717-2.126 1.384S.935 3.35.63 4.14C.333 4.905.131 5.775.072 7.053.012 8.333 0 8.74 0 12s.015 3.667.072 4.947c.06 1.277.261 2.148.558 2.913.306.788.717 1.459 1.384 2.126.667.666 1.336 1.079 2.126 1.384.766.296 1.636.499 2.913.558C8.333 23.988 8.74 24 12 24s3.667-.015 4.947-.072c1.277-.06 2.148-.262 2.913-.558.788-.306 1.459-.718 2.126-1.384.666-.667 1.079-1.335 1.384-2.126.296-.765.499-1.636.558-2.913.06-1.28.072-1.687.072-4.947s-.015-3.667-.072-4.947c-.06-1.277-.262-2.149-.558-2.913-.306-.789-.718-1.459-1.384-2.126C21.319 1.347 20.651.935 19.86.63c-.765-.297-1.636-.499-2.913-.558C15.667.012 15.26 0 12 0zm0 2.16c3.203 0 3.585.016 4.85.071 1.17.055 1.805.249 2.227.415.562.217.96.477 1.382.896.419.42.679.819.896 1.381.164.422.36 1.057.413 2.227.057 1.266.07 1.646.07 4.85s-.015 3.585-.074 4.85c-.061 1.17-.256 1.805-.421 2.227-.224.562-.479.96-.899 1.382-.419.419-.824.679-1.38.896-.42.164-1.065.36-2.235.413-1.274.057-1.649.07-4.859.07-3.211 0-3.586-.015-4.859-.074-1.171-.061-1.816-.256-2.236-.421-.569-.224-.96-.479-1.379-.899-.421-.419-.69-.824-.9-1.38-.165-.42-.359-1.065-.42-2.235-.045-1.26-.061-1.649-.061-4.844 0-3.196.016-3.586.061-4.861.061-1.17.255-1.814.42-2.234.21-.57.479-.96.9-1.381.419-.419.81-.689 1.379-.898.42-.166 1.051-.361 2.221-.421 1.275-.045 1.65-.06 4.859-.06l.045.03zm0 3.678c-3.405 0-6.162 2.76-6.162 6.162 0 3.405 2.76 6.162 6.162 6.162 3.405 0 6.162-2.76 6.162-6.162 0-3.405-2.76-6.162-6.162-6.162zM12 16c-2.21 0-4-1.79-4-4s1.79-4 4-4 4 1.79 4 4-1.79 4-4 4zm7.846-10.405c0 .795-.646 1.44-1.44 1.44-.795 0-1.44-.646-1.44-1.44 0-.794.646-1.439 1.44-1.439.793-.001 1.44.645 1.44 1.439z"/>
+                    </svg>
+                </a>
+                <a href="#" class="text-gray-400 hover:text-primary transition" aria-label="YouTube">
+                    <svg class="w-5 h-5 sm:w-6 sm:h-6" fill="currentColor" viewBox="0 0 24 24">
+                        <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/>
+                    </svg>
+                </a>
+            </div>
+        </div>
+    </footer>
+    
+</body>
+</html>

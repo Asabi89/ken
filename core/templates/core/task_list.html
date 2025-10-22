@@ -1,0 +1,172 @@
+{% extends 'core/base.html' %}
+
+{% block title %}All Tasks - Ken{% endblock %}
+
+{% block content %}
+<div class="pb-20 md:pb-6">
+    
+    <div class="mb-8">
+        <h1 class="text-3xl font-bold text-white font-slab mb-2">Available Tasks</h1>
+        <p class="text-gray-400">Choose a category and complete tasks to earn points</p>
+    </div>
+    
+    <div class="flex items-center space-x-3 mb-8 overflow-x-auto pb-2">
+        <a href="?category=all" class="px-6 py-3 rounded-xl font-bold transition whitespace-nowrap {% if current_category == 'all' %}bg-primary text-black{% else %}bg-gray-800 text-gray-300 hover:bg-gray-700{% endif %}">
+            All Tasks
+        </a>
+        <a href="?category=video" class="px-6 py-3 rounded-xl font-bold transition whitespace-nowrap {% if current_category == 'video' %}bg-primary text-black{% else %}bg-gray-800 text-gray-300 hover:bg-gray-700{% endif %}">
+            <svg class="w-5 h-5 inline mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z"/>
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+            </svg>
+            Video
+        </a>
+        <a href="?category=opinion" class="px-6 py-3 rounded-xl font-bold transition whitespace-nowrap {% if current_category == 'opinion' %}bg-primary text-black{% else %}bg-gray-800 text-gray-300 hover:bg-gray-700{% endif %}">
+            <svg class="w-5 h-5 inline mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"/>
+            </svg>
+            Share Opinion
+        </a>
+        <a href="?category=game" class="px-6 py-3 rounded-xl font-bold transition whitespace-nowrap {% if current_category == 'game' %}bg-primary text-black{% else %}bg-gray-800 text-gray-300 hover:bg-gray-700{% endif %}">
+            <svg class="w-5 h-5 inline mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 4a2 2 0 114 0v1a1 1 0 001 1h3a1 1 0 011 1v3a1 1 0 01-1 1h-1a2 2 0 100 4h1a1 1 0 011 1v3a1 1 0 01-1 1h-3a1 1 0 01-1-1v-1a2 2 0 10-4 0v1a1 1 0 01-1 1H7a1 1 0 01-1-1v-3a1 1 0 00-1-1H4a2 2 0 110-4h1a1 1 0 001-1V7a1 1 0 011-1h3a1 1 0 001-1V4z"/>
+            </svg>
+            Game
+        </a>
+    </div>
+    
+    {% if page_obj %}
+    <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
+        {% for task in page_obj %}
+        <a href="{% url 'task_detail' task.id %}" class="card p-5 rounded-xl block hover:scale-[1.02] transition-transform relative overflow-hidden">
+            {% if task.task_type == 'watch' %}
+            <div class="absolute top-0 right-0 bg-gradient-to-l from-red-600 to-red-500 text-white px-3 py-1 text-xs font-bold flex items-center space-x-1 rounded-bl-lg">
+                <svg class="w-3 h-3" fill="currentColor" viewBox="0 0 24 24">
+                    <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/>
+                </svg>
+                <span>VIDEO</span>
+            </div>
+            {% endif %}
+            <div class="mb-4">
+                {% if task.category == 'video' %}
+                <div class="w-12 h-12 bg-blue-900/30 rounded-lg flex items-center justify-center mb-3">
+                    <svg class="w-6 h-6 text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z"/>
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                    </svg>
+                </div>
+                {% elif task.category == 'opinion' %}
+                <div class="w-12 h-12 bg-pink-900/30 rounded-lg flex items-center justify-center mb-3">
+                    <svg class="w-6 h-6 text-pink-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"/>
+                    </svg>
+                </div>
+                {% elif task.category == 'game' %}
+                <div class="w-12 h-12 bg-purple-900/30 rounded-lg flex items-center justify-center mb-3">
+                    <svg class="w-6 h-6 text-purple-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 4a2 2 0 114 0v1a1 1 0 001 1h3a1 1 0 011 1v3a1 1 0 01-1 1h-1a2 2 0 100 4h1a1 1 0 011 1v3a1 1 0 01-1 1h-3a1 1 0 01-1-1v-1a2 2 0 10-4 0v1a1 1 0 01-1 1H7a1 1 0 01-1-1v-3a1 1 0 00-1-1H4a2 2 0 110-4h1a1 1 0 001-1V7a1 1 0 011-1h3a1 1 0 001-1V4z"/>
+                    </svg>
+                </div>
+                {% endif %}
+                <h3 class="font-bold text-white text-sm mb-3 line-clamp-2">{{ task.title }}</h3>
+            </div>
+            
+            <div class="space-y-2 mb-4 text-xs">
+                {% if task.expires_at %}
+                <div class="flex items-center text-gray-400">
+                    <svg class="w-4 h-4 mr-2 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/>
+                    </svg>
+                    <span>{{ task.expires_at|date:"M d, Y" }}</span>
+                </div>
+                {% endif %}
+                <div class="flex items-center text-gray-400">
+                    <svg class="w-4 h-4 mr-2 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                    </svg>
+                    <span>{{ task.minutes_to_complete }} min</span>
+                </div>
+            </div>
+            
+            <div class="pt-3 border-t border-gray-700">
+                <div class="flex items-center justify-between">
+                    <span class="text-primary font-bold text-lg">+{{ task.points }}</span>
+                    <span class="text-gray-400 text-xs">{{ task.cfa_value }} CFA</span>
+                </div>
+            </div>
+        </a>
+        {% endfor %}
+    </div>
+    
+    {% if page_obj.has_other_pages %}
+    <div class="flex items-center justify-center space-x-2">
+        {% if page_obj.has_previous %}
+        <a href="?category={{ current_category }}&page={{ page_obj.previous_page_number }}" class="px-4 py-2 bg-gray-800 text-gray-300 rounded-lg hover:bg-gray-700 transition">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
+            </svg>
+        </a>
+        {% endif %}
+        
+        {% for num in page_obj.paginator.page_range %}
+            {% if page_obj.number == num %}
+            <span class="px-4 py-2 bg-primary text-black rounded-lg font-bold">{{ num }}</span>
+            {% elif num > page_obj.number|add:'-3' and num < page_obj.number|add:'3' %}
+            <a href="?category={{ current_category }}&page={{ num }}" class="px-4 py-2 bg-gray-800 text-gray-300 rounded-lg hover:bg-gray-700 transition">{{ num }}</a>
+            {% endif %}
+        {% endfor %}
+        
+        {% if page_obj.has_next %}
+        <a href="?category={{ current_category }}&page={{ page_obj.next_page_number }}" class="px-4 py-2 bg-gray-800 text-gray-300 rounded-lg hover:bg-gray-700 transition">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+            </svg>
+        </a>
+        {% endif %}
+    </div>
+    {% endif %}
+    
+    {% else %}
+    <div class="text-center py-12">
+        <div class="max-w-md mx-auto">
+            <h3 class="text-2xl font-bold text-white mb-4 font-slab">No Tasks Yet</h3>
+            <p class="text-gray-400 mb-8">Here's how it will look when tasks are available</p>
+        </div>
+        
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-4 opacity-50">
+            {% for i in "123456789012" %}
+            <div class="card p-5 rounded-xl">
+                <div class="w-12 h-12 bg-blue-900/30 rounded-lg flex items-center justify-center mb-3">
+                    <svg class="w-6 h-6 text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z"/>
+                    </svg>
+                </div>
+                <h3 class="font-bold text-white text-sm mb-3">Sample Task Title</h3>
+                <div class="space-y-2 mb-4 text-xs">
+                    <div class="flex items-center text-gray-400">
+                        <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/>
+                        </svg>
+                        <span>Dec 31, 2025</span>
+                    </div>
+                    <div class="flex items-center text-gray-400">
+                        <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                        </svg>
+                        <span>1 min</span>
+                    </div>
+                </div>
+                <div class="pt-3 border-t border-gray-700">
+                    <div class="flex items-center justify-between">
+                        <span class="text-primary font-bold text-lg">+100</span>
+                        <span class="text-gray-400 text-xs">10 CFA</span>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+    {% endif %}
+    
+</div>
+{% endblock %}
