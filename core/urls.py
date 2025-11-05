@@ -1,5 +1,6 @@
-from django.urls import path
+from django.urls import path, include
 from . import views
+from .views_upgrade import upgrade_to_influencer_view
 
 urlpatterns = [
     path('', views.landing_view, name='landing'),
@@ -14,4 +15,7 @@ urlpatterns = [
     path('tasks/<int:task_id>/complete/', views.complete_task_view, name='complete_task'),
     path('withdrawal/', views.withdrawal_view, name='withdrawal'),
     path('transactions/', views.transactions_view, name='transactions'),
+    
+    path('influencer/', include('core.urls_influencer')),
+    path('upgrade-to-influencer/', upgrade_to_influencer_view, name='upgrade_to_influencer'),
 ]

@@ -30,7 +30,7 @@ class Task(models.Model):
     video_url = models.URLField()
     channel_url = models.URLField(blank=True, null=True)
     points = models.IntegerField()
-    cfa_value = models.DecimalField(max_digits=10, decimal_places=2)
+    usd_value = models.DecimalField(max_digits=10, decimal_places=2)
     duration_seconds = models.IntegerField(default=0)
     expires_at = models.DateTimeField(blank=True, null=True)
     status = models.CharField(max_length=20, choices=STATUS_CHOICES, default='active')
@@ -51,6 +51,19 @@ class Task(models.Model):
             return round(self.duration_seconds / 60, 1)
         return 1
     
+    def calculate_usd_from_points(self):
+        if self.points == 100:
+            return 0.50
+        elif self.points == 150:
+            return 0.70
+        else:
+            return self.points * 0.005
+    
+    def save(self, *args, **kwargs):
+        if not self.usd_value:
+            self.usd_value = self.calculate_usd_from_points()
+        super().save(*args, **kwargs)
+    
     def get_embed_url(self):
         url = self.video_url
         if 'youtube.com/watch?v=' in url:
@@ -69,8 +82,8 @@ class UserProfile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE, related_name='profile')
     profile_picture = models.ImageField(upload_to='profile_pics/', blank=True, null=True)
     total_points = models.IntegerField(default=0)
-    total_earned_cfa = models.DecimalField(max_digits=10, decimal_places=2, default=0)
-    available_balance_cfa = models.DecimalField(max_digits=10, decimal_places=2, default=0)
+    total_earned_usd = models.DecimalField(max_digits=10, decimal_places=2, default=0)
+    available_balance_usd = models.DecimalField(max_digits=10, decimal_places=2, default=0)
     phone_number = models.CharField(max_length=20, blank=True, null=True)
     mobile_money_provider = models.CharField(max_length=50, blank=True, null=True)
     withdrawal_pin = models.CharField(max_length=6, blank=True, null=True)
@@ -81,6 +94,52 @@ class UserProfile(models.Model):
     
     def __str__(self):
         return f"{self.user.username} - {self.total_points} points"
+
+
+class InfluencerProfile(models.Model):
+    STATUS_CHOICES = (
+        ('pending', 'Pending Approval'),
+        ('approved', 'Approved'),
+        ('rejected', 'Rejected'),
+        ('suspended', 'Suspended'),
+    )
+    
+    user = models.OneToOneField(User, on_delete=models.CASCADE, related_name='influencer_profile')
+    company_name = models.CharField(max_length=255, blank=True, null=True)
+    website = models.URLField(blank=True, null=True)
+    social_media = models.CharField(max_length=255, blank=True, null=True)
+    phone_number = models.CharField(max_length=20)
+    bio = models.TextField(blank=True, null=True)
+    profile_picture = models.ImageField(upload_to='influencer_pics/', blank=True, null=True)
+    
+    is_verified = models.BooleanField(default=False)
+    status = models.CharField(max_length=20, choices=STATUS_CHOICES, default='pending')
+    approved_at = models.DateTimeField(blank=True, null=True)
+    approved_by = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, blank=True, related_name='approved_influencers')
+    rejection_reason = models.TextField(blank=True, null=True)
+    
+    total_tasks_created = models.IntegerField(default=0)
+    total_budget_spent = models.DecimalField(max_digits=10, decimal_places=2, default=0)
+    budget_limit = models.DecimalField(max_digits=10, decimal_places=2, default=0, help_text="Maximum budget the influencer can spend. 0 means unlimited.")
+    
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+    
+    def __str__(self):
+        return f"{self.user.username} - Influencer ({self.status})"
+    
+    def can_create_tasks(self):
+        return self.is_verified and self.status == 'approved'
+    
+    def get_remaining_budget(self):
+        if self.budget_limit == 0:
+            return None  # Unlimited
+        return self.budget_limit - self.total_budget_spent
+    
+    def has_budget_available(self, amount):
+        if self.budget_limit == 0:
+            return True  # Unlimited
+        return self.total_budget_spent + amount <= self.budget_limit
 
 
 class EmailVerification(models.Model):
@@ -100,7 +159,7 @@ class TaskCompletion(models.Model):
     task = models.ForeignKey(Task, on_delete=models.CASCADE, related_name='completions')
     completed_at = models.DateTimeField(default=timezone.now)
     points_earned = models.IntegerField()
-    cfa_earned = models.DecimalField(max_digits=10, decimal_places=2)
+    usd_earned = models.DecimalField(max_digits=10, decimal_places=2)
     proof_screenshot = models.ImageField(upload_to='proofs/', blank=True, null=True)
     is_verified = models.BooleanField(default=False)
     verified_at = models.DateTimeField(blank=True, null=True)
@@ -129,7 +188,7 @@ class Transaction(models.Model):
     
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='transactions')
     transaction_type = models.CharField(max_length=20, choices=TRANSACTION_TYPES)
-    amount_cfa = models.DecimalField(max_digits=10, decimal_places=2)
+    amount_usd = models.DecimalField(max_digits=10, decimal_places=2)
     points = models.IntegerField(default=0)
     status = models.CharField(max_length=20, choices=STATUS_CHOICES, default='pending')
     phone_number = models.CharField(max_length=20, blank=True, null=True)
@@ -141,4 +200,4 @@ class Transaction(models.Model):
     updated_at = models.DateTimeField(auto_now=True)
     
     def __str__(self):
-        return f"{self.user.username} - {self.transaction_type} - {self.amount_cfa} CFA"
+        return f"{self.user.username} - {self.transaction_type} - ${self.amount_usd}"

@@ -5,6 +5,19 @@ from .models import Task, Transaction, UserProfile, TaskCompletion
 
 
 class SignUpForm(UserCreationForm):
+    USER_TYPE_CHOICES = (
+        ('user', 'Regular User - Complete tasks and earn money'),
+        ('influencer', 'Influencer/Business - Create tasks and promote'),
+    )
+    
+    user_type = forms.ChoiceField(
+        choices=USER_TYPE_CHOICES,
+        widget=forms.RadioSelect(attrs={
+            'class': 'user-type-radio'
+        }),
+        initial='user'
+    )
+    
     email = forms.EmailField(required=True, widget=forms.EmailInput(attrs={
         'class': 'w-full px-4 py-3 bg-gray-900 border border-gray-700 rounded-lg focus:outline-none focus:border-green-500 text-white',
         'placeholder': 'Email'
@@ -12,6 +25,11 @@ class SignUpForm(UserCreationForm):
     phone_number = forms.CharField(max_length=20, required=False, widget=forms.TextInput(attrs={
         'class': 'w-full px-4 py-3 bg-gray-900 border border-gray-700 rounded-lg focus:outline-none focus:border-green-500 text-white',
         'placeholder': 'Phone Number (Optional)'
+    }))
+    
+    company_name = forms.CharField(max_length=255, required=False, widget=forms.TextInput(attrs={
+        'class': 'w-full px-4 py-3 bg-gray-900 border border-gray-700 rounded-lg focus:outline-none focus:border-green-500 text-white',
+        'placeholder': 'Company Name (for influencers)'
     }))
     
     class Meta:
@@ -48,7 +66,7 @@ class LoginForm(AuthenticationForm):
 class TaskForm(forms.ModelForm):
     class Meta:
         model = Task
-        fields = ['title', 'task_type', 'video_url', 'channel_url', 'points', 'cfa_value', 'duration_seconds', 'max_completions']
+        fields = ['title', 'task_type', 'video_url', 'channel_url', 'points', 'usd_value', 'duration_seconds', 'max_completions']
         widgets = {
             'title': forms.TextInput(attrs={
                 'class': 'w-full px-4 py-3 bg-gray-900 border border-gray-700 rounded-lg focus:outline-none focus:border-green-500 text-white',
@@ -69,9 +87,9 @@ class TaskForm(forms.ModelForm):
                 'class': 'w-full px-4 py-3 bg-gray-900 border border-gray-700 rounded-lg focus:outline-none focus:border-green-500 text-white',
                 'placeholder': '100'
             }),
-            'cfa_value': forms.NumberInput(attrs={
+            'usd_value': forms.NumberInput(attrs={
                 'class': 'w-full px-4 py-3 bg-gray-900 border border-gray-700 rounded-lg focus:outline-none focus:border-green-500 text-white',
-                'placeholder': '10.00'
+                'placeholder': '0.50'
             }),
             'duration_seconds': forms.NumberInput(attrs={
                 'class': 'w-full px-4 py-3 bg-gray-900 border border-gray-700 rounded-lg focus:outline-none focus:border-green-500 text-white',
@@ -140,12 +158,12 @@ class VerifyOTPForm(forms.Form):
 class WithdrawalForm(forms.ModelForm):
     class Meta:
         model = Transaction
-        fields = ['amount_cfa', 'phone_number', 'mobile_money_provider']
+        fields = ['amount_usd', 'phone_number', 'mobile_money_provider']
         widgets = {
-            'amount_cfa': forms.NumberInput(attrs={
+            'amount_usd': forms.NumberInput(attrs={
                 'class': 'w-full px-4 py-3 bg-gray-900 border border-gray-700 rounded-lg focus:outline-none focus:border-green-500 text-white',
-                'placeholder': 'Amount (CFA)',
-                'min': '5000'
+                'placeholder': 'Amount ($)',
+                'min': '50'
             }),
             'phone_number': forms.TextInput(attrs={
                 'class': 'w-full px-4 py-3 bg-gray-900 border border-gray-700 rounded-lg focus:outline-none focus:border-green-500 text-white',

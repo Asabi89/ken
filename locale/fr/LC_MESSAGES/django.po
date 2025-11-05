@@ -1,0 +1,651 @@
+# French translations for Ken project.
+msgid ""
+msgstr ""
+"Content-Type: text/plain; charset=UTF-8\n"
+"Language: fr\n"
+
+# Navigation & Menus
+msgid "Dashboard"
+msgstr "Tableau de bord"
+
+msgid "All Tasks"
+msgstr "Toutes les tâches"
+
+msgid "Withdraw"
+msgstr "Retirer"
+
+msgid "History"
+msgstr "Historique"
+
+msgid "Profile"
+msgstr "Profil"
+
+msgid "Logout"
+msgstr "Déconnexion"
+
+msgid "My Profile"
+msgstr "Mon profil"
+
+msgid "View and manage your account"
+msgstr "Voir et gérer votre compte"
+
+msgid "Account Stats"
+msgstr "Statistiques du compte"
+
+msgid "Back to Dashboard"
+msgstr "Retour au tableau de bord"
+
+msgid "Withdraw Money"
+msgstr "Retirer de l'argent"
+
+msgid "Not set"
+msgstr "Non défini"
+
+msgid "View and manage your account"
+msgstr "Voir et gérer votre compte"
+
+msgid "Login"
+msgstr "Connexion"
+
+msgid "Sign Up"
+msgstr "S'inscrire"
+
+msgid "Transactions"
+msgstr "Transactions"
+
+# Landing Page
+msgid "Earn Money Online"
+msgstr "Gagnez de l'argent en ligne"
+
+msgid "Earn Money by Completing"
+msgstr "Gagnez de l'argent en accomplissant"
+
+msgid "Simple Tasks"
+msgstr "Des tâches simples"
+
+msgid "Watch videos, like content, subscribe to channels and get paid instantly. Turn your time into money with Ken."
+msgstr "Regardez des vidéos, aimez du contenu, abonnez-vous à des chaînes et soyez payé instantanément. Transformez votre temps en argent avec Ken."
+
+msgid "Get Started Now"
+msgstr "Commencer maintenant"
+
+msgid "I Have an Account"
+msgstr "J'ai un compte"
+
+msgid "Active Users"
+msgstr "Utilisateurs actifs"
+
+msgid "Tasks Done"
+msgstr "Tâches complétées"
+
+msgid "Support"
+msgstr "Support"
+
+msgid "Available"
+msgstr "Disponibles"
+
+msgid "Tasks"
+msgstr "Tâches"
+
+msgid "Choose from a variety of simple tasks and start earning immediately"
+msgstr "Choisissez parmi une variété de tâches simples et commencez à gagner immédiatement"
+
+msgid "Watch Videos"
+msgstr "Regarder des vidéos"
+
+msgid "Watch videos for 50 seconds and earn 100 points"
+msgstr "Regardez des vidéos pendant 50 secondes et gagnez 100 points"
+
+msgid "Like Content"
+msgstr "Aimer du contenu"
+
+msgid "Like videos and earn 100 points per task"
+msgstr "Aimez des vidéos et gagnez 100 points par tâche"
+
+msgid "Subscribe"
+msgstr "S'abonner"
+
+msgid "Subscribe to channels and earn 150 points"
+msgstr "Abonnez-vous à des chaînes et gagnez 150 points"
+
+msgid "How It"
+msgstr "Comment ça"
+
+msgid "Works"
+msgstr "Marche"
+
+msgid "Start earning in 4 simple steps"
+msgstr "Commencez à gagner en 4 étapes simples"
+
+msgid "Create your free account in seconds"
+msgstr "Créez votre compte gratuit en quelques secondes"
+
+msgid "Complete Tasks"
+msgstr "Complétez les tâches"
+
+msgid "Choose from available tasks and complete them"
+msgstr "Choisissez parmi les tâches disponibles et complétez-les"
+
+msgid "Earn Points"
+msgstr "Gagnez des points"
+
+msgid "Get instant points that convert to cash"
+msgstr "Obtenez des points instantanés qui se convertissent en argent"
+
+msgid "Cash out via mobile money (min. $50)"
+msgstr "Encaissez via mobile money (min. 50$)"
+
+msgid "Why Choose"
+msgstr "Pourquoi choisir"
+
+msgid "Join thousands of satisfied users earning daily"
+msgstr "Rejoignez des milliers d'utilisateurs satisfaits qui gagnent quotidiennement"
+
+# Dashboard
+msgid "Welcome back"
+msgstr "Bon retour"
+
+msgid "Complete tasks and earn money"
+msgstr "Complétez des tâches et gagnez de l'argent"
+
+msgid "Total Points"
+msgstr "Total de points"
+
+msgid "Available Balance"
+msgstr "Solde disponible"
+
+msgid "Tasks Completed"
+msgstr "Tâches complétées"
+
+msgid "Quick Stats"
+msgstr "Statistiques rapides"
+
+msgid "Available Tasks"
+msgstr "Tâches disponibles"
+
+msgid "View All Tasks"
+msgstr "Voir toutes les tâches"
+
+msgid "Recent Activity"
+msgstr "Activité récente"
+
+msgid "View History"
+msgstr "Voir l'historique"
+
+msgid "No tasks completed yet"
+msgstr "Aucune tâche complétée pour le moment"
+
+msgid "Start completing tasks to see your activity here"
+msgstr "Commencez à compléter des tâches pour voir votre activité ici"
+
+# Login/Signup
+msgid "Welcome to Ken"
+msgstr "Bienvenue sur Ken"
+
+msgid "Login to your account"
+msgstr "Connectez-vous à votre compte"
+
+msgid "Username"
+msgstr "Nom d'utilisateur"
+
+msgid "Password"
+msgstr "Mot de passe"
+
+msgid "Remember me"
+msgstr "Se souvenir de moi"
+
+msgid "Forgot password?"
+msgstr "Mot de passe oublié?"
+
+msgid "Don't have an account?"
+msgstr "Vous n'avez pas de compte?"
+
+msgid "Create Account"
+msgstr "Créer un compte"
+
+msgid "Join Ken and start earning"
+msgstr "Rejoignez Ken et commencez à gagner"
+
+msgid "Email"
+msgstr "Email"
+
+msgid "Phone Number"
+msgstr "Numéro de téléphone"
+
+msgid "Confirm Password"
+msgstr "Confirmer le mot de passe"
+
+msgid "Already have an account?"
+msgstr "Vous avez déjà un compte?"
+
+msgid "Sign in"
+msgstr "Se connecter"
+
+# Tasks
+msgid "All Available Tasks"
+msgstr "Toutes les tâches disponibles"
+
+msgid "Filter by Category"
+msgstr "Filtrer par catégorie"
+
+msgid "All"
+msgstr "Toutes"
+
+msgid "Video"
+msgstr "Vidéo"
+
+msgid "Opinion"
+msgstr "Opinion"
+
+msgid "Game"
+msgstr "Jeu"
+
+msgid "No tasks available"
+msgstr "Aucune tâche disponible"
+
+msgid "Check back later for new tasks"
+msgstr "Revenez plus tard pour de nouvelles tâches"
+
+msgid "View Details"
+msgstr "Voir les détails"
+
+msgid "Task Details"
+msgstr "Détails de la tâche"
+
+msgid "Reward"
+msgstr "Récompense"
+
+msgid "Duration"
+msgstr "Durée"
+
+msgid "minutes"
+msgstr "minutes"
+
+msgid "Spots Available"
+msgstr "Places disponibles"
+
+msgid "Description"
+msgstr "Description"
+
+msgid "Instructions"
+msgstr "Instructions"
+
+msgid "Watch the video for the required duration"
+msgstr "Regardez la vidéo pendant la durée requise"
+
+msgid "Like the video"
+msgstr "Aimez la vidéo"
+
+msgid "Subscribe to the channel"
+msgstr "Abonnez-vous à la chaîne"
+
+msgid "Upload proof screenshot"
+msgstr "Téléchargez une capture d'écran comme preuve"
+
+msgid "Complete Task"
+msgstr "Compléter la tâche"
+
+msgid "Already Completed"
+msgstr "Déjà complété"
+
+msgid "Task Completed!"
+msgstr "Tâche complétée!"
+
+msgid "Upload Proof"
+msgstr "Télécharger la preuve"
+
+msgid "Choose file"
+msgstr "Choisir un fichier"
+
+msgid "Submit"
+msgstr "Soumettre"
+
+# Profile
+msgid "My Profile"
+msgstr "Mon profil"
+
+msgid "Account Information"
+msgstr "Informations du compte"
+
+msgid "Edit Profile"
+msgstr "Modifier le profil"
+
+msgid "Member Since"
+msgstr "Membre depuis"
+
+msgid "Email Verified"
+msgstr "Email vérifié"
+
+msgid "Yes"
+msgstr "Oui"
+
+msgid "No"
+msgstr "Non"
+
+msgid "Earnings Summary"
+msgstr "Résumé des gains"
+
+msgid "Total Earned"
+msgstr "Total gagné"
+
+msgid "Pending"
+msgstr "En attente"
+
+msgid "Withdrawn"
+msgstr "Retiré"
+
+msgid "Update Profile"
+msgstr "Mettre à jour le profil"
+
+msgid "Profile Picture"
+msgstr "Photo de profil"
+
+msgid "Mobile Money Provider"
+msgstr "Fournisseur Mobile Money"
+
+msgid "Select Provider"
+msgstr "Sélectionner un fournisseur"
+
+msgid "Save Changes"
+msgstr "Sauvegarder les modifications"
+
+msgid "Cancel"
+msgstr "Annuler"
+
+# Withdrawal
+msgid "Withdraw Funds"
+msgstr "Retirer des fonds"
+
+msgid "Setup Withdrawal"
+msgstr "Configurer le retrait"
+
+msgid "Verify Email"
+msgstr "Vérifier l'email"
+
+msgid "Withdrawal Request"
+msgstr "Demande de retrait"
+
+msgid "Amount"
+msgstr "Montant"
+
+msgid "Minimum withdrawal"
+msgstr "Retrait minimum"
+
+msgid "Enter amount"
+msgstr "Entrez le montant"
+
+msgid "Withdrawal PIN"
+msgstr "Code PIN de retrait"
+
+msgid "Enter PIN"
+msgstr "Entrez le code PIN"
+
+msgid "Create PIN"
+msgstr "Créer un code PIN"
+
+msgid "Enter OTP Code"
+msgstr "Entrez le code OTP"
+
+msgid "Verify"
+msgstr "Vérifier"
+
+msgid "Request Withdrawal"
+msgstr "Demander un retrait"
+
+msgid "Withdrawal History"
+msgstr "Historique des retraits"
+
+# Transactions
+msgid "Transaction History"
+msgstr "Historique des transactions"
+
+msgid "Earnings"
+msgstr "Gains"
+
+msgid "Withdrawals"
+msgstr "Retraits"
+
+msgid "Type"
+msgstr "Type"
+
+msgid "Status"
+msgstr "Statut"
+
+msgid "Date"
+msgstr "Date"
+
+msgid "Reference"
+msgstr "Référence"
+
+msgid "Approved"
+msgstr "Approuvé"
+
+msgid "Rejected"
+msgstr "Rejeté"
+
+msgid "Completed"
+msgstr "Complété"
+
+msgid "No transactions yet"
+msgstr "Aucune transaction pour le moment"
+
+msgid "Your transaction history will appear here"
+msgstr "Votre historique de transactions apparaîtra ici"
+
+# Common
+msgid "points"
+msgstr "points"
+
+msgid "Loading"
+msgstr "Chargement"
+
+msgid "Back"
+msgstr "Retour"
+
+msgid "Next"
+msgstr "Suivant"
+
+msgid "Previous"
+msgstr "Précédent"
+
+msgid "Search"
+msgstr "Rechercher"
+
+msgid "Filter"
+msgstr "Filtrer"
+
+msgid "Sort"
+msgstr "Trier"
+
+msgid "Optional"
+msgstr "Optionnel"
+
+msgid "Required"
+msgstr "Requis"
+
+msgid "Success"
+msgstr "Succès"
+
+msgid "Error"
+msgstr "Erreur"
+
+msgid "Warning"
+msgstr "Attention"
+
+msgid "Info"
+msgstr "Information"
+
+msgid "Close"
+msgstr "Fermer"
+
+msgid "Confirm"
+msgstr "Confirmer"
+
+# Influencer Module
+msgid "Are you a business or influencer?"
+msgstr "Êtes-vous une entreprise ou un influenceur?"
+
+msgid "Join as Influencer"
+msgstr "Rejoindre en tant qu'influenceur"
+
+msgid "Influencer Signup"
+msgstr "Inscription influenceur"
+
+msgid "Create your influencer account"
+msgstr "Créez votre compte influenceur"
+
+msgid "Company Name"
+msgstr "Nom de l'entreprise"
+
+msgid "Website"
+msgstr "Site web"
+
+msgid "Social Media Links"
+msgstr "Liens réseaux sociaux"
+
+msgid "Bio"
+msgstr "Biographie"
+
+msgid "Influencer Dashboard"
+msgstr "Tableau de bord influenceur"
+
+msgid "Create New Task"
+msgstr "Créer une nouvelle tâche"
+
+msgid "My Tasks"
+msgstr "Mes tâches"
+
+msgid "Pending Proofs"
+msgstr "Preuves en attente"
+
+msgid "Budget Spent"
+msgstr "Budget dépensé"
+
+msgid "Task Title"
+msgstr "Titre de la tâche"
+
+msgid "Task Type"
+msgstr "Type de tâche"
+
+msgid "Category"
+msgstr "Catégorie"
+
+msgid "Video URL"
+msgstr "URL de la vidéo"
+
+msgid "Channel URL"
+msgstr "URL de la chaîne"
+
+msgid "Max Completions"
+msgstr "Complétions maximales"
+
+msgid "Expires At"
+msgstr "Expire le"
+
+msgid "Create Task"
+msgstr "Créer la tâche"
+
+msgid "Task created successfully!"
+msgstr "Tâche créée avec succès!"
+
+msgid "Task Details"
+msgstr "Détails de la tâche"
+
+msgid "Completions"
+msgstr "Complétions"
+
+msgid "View Proofs"
+msgstr "Voir les preuves"
+
+msgid "Proof"
+msgstr "Preuve"
+
+msgid "Approve"
+msgstr "Approuver"
+
+msgid "Reject"
+msgstr "Rejeter"
+
+msgid "Proof approved"
+msgstr "Preuve approuvée"
+
+msgid "Proof rejected"
+msgstr "Preuve rejetée"
+
+msgid "Account pending approval"
+msgstr "Compte en attente d'approbation"
+
+msgid "Your account is being reviewed by our team"
+msgstr "Votre compte est en cours d'examen par notre équipe"
+
+msgid "Account Status"
+msgstr "Statut du compte"
+
+msgid "Verification pending"
+msgstr "Vérification en attente"
+
+msgid "Active Tasks"
+msgstr "Tâches actives"
+
+msgid "Total Completions"
+msgstr "Complétions totales"
+
+msgid "Account Type"
+msgstr "Type de compte"
+
+msgid "Regular User"
+msgstr "Utilisateur régulier"
+
+msgid "Influencer/Business"
+msgstr "Influenceur/Entreprise"
+
+msgid "Complete tasks and earn money"
+msgstr "Complétez des tâches et gagnez de l'argent"
+
+msgid "Create tasks and promote your content"
+msgstr "Créez des tâches et promouvez votre contenu"
+
+msgid "Upgrade to Influencer"
+msgstr "Passer en influenceur"
+
+msgid "Become an Influencer"
+msgstr "Devenir influenceur"
+
+msgid "Promote your content and grow your audience"
+msgstr "Promouvez votre contenu et développez votre audience"
+
+msgid "Influencer Benefits"
+msgstr "Avantages influenceur"
+
+msgid "Create unlimited tasks"
+msgstr "Créez des tâches illimitées"
+
+msgid "Track engagement in real-time"
+msgstr "Suivez l'engagement en temps réel"
+
+msgid "Professional dashboard with analytics"
+msgstr "Tableau de bord professionnel avec analyses"
+
+msgid "Validate user submissions"
+msgstr "Validez les soumissions des utilisateurs"
+
+msgid "Your phone number"
+msgstr "Votre numéro de téléphone"
+
+msgid "Your company or brand name"
+msgstr "Le nom de votre entreprise ou marque"
+
+msgid "YouTube, Instagram, Twitter links"
+msgstr "Liens YouTube, Instagram, Twitter"
+
+msgid "Tell us about your business and goals"
+msgstr "Parlez-nous de votre entreprise et de vos objectifs"
+
+msgid "Note"
+msgstr "Note"
+
+msgid "Your influencer account will need to be approved by our team before you can start creating tasks"
+msgstr "Votre compte influenceur devra être approuvé par notre équipe avant de pouvoir créer des tâches"
+
+msgid "Complete tasks, earn money"
+msgstr "Complétez des tâches, gagnez de l'argent"

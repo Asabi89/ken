@@ -10,23 +10,78 @@ from .forms import SignUpForm, LoginForm, TaskForm, WithdrawalForm
 
 def landing_view(request):
     if request.user.is_authenticated:
+        if hasattr(request.user, 'influencer_profile'):
+            if not request.user.influencer_profile.is_verified:
+                return redirect('influencer_verify_email')
+            return redirect('influencer_dashboard')
         return redirect('dashboard')
     return render(request, 'core/landing.html')
 
 
 def signup_view(request):
     if request.user.is_authenticated:
+        if hasattr(request.user, 'influencer_profile'):
+            if not request.user.influencer_profile.is_verified:
+                return redirect('influencer_verify_email')
+            return redirect('influencer_dashboard')
         return redirect('dashboard')
     
     if request.method == 'POST':
         form = SignUpForm(request.POST)
         if form.is_valid():
             user = form.save()
+            user.email = form.cleaned_data.get('email')
+            user.save()
+            
             phone_number = form.cleaned_data.get('phone_number')
-            UserProfile.objects.create(user=user, phone_number=phone_number)
-            login(request, user)
-            messages.success(request, 'Account created successfully!')
-            return redirect('dashboard')
+            user_type = form.cleaned_data.get('user_type')
+            company_name = form.cleaned_data.get('company_name')
+            
+            if user_type == 'influencer':
+                from .models import InfluencerProfile
+                InfluencerProfile.objects.create(
+                    user=user,
+                    phone_number=phone_number or '',
+                    company_name=company_name or '',
+                    is_verified=False,
+                    status='pending'
+                )
+                
+                import random
+                from datetime import timedelta
+                from .models import EmailVerification
+                
+                otp_code = str(random.randint(100000, 999999))
+                EmailVerification.objects.create(
+                    user=user,
+                    otp_code=otp_code,
+                    expires_at=timezone.now() + timedelta(minutes=10)
+                )
+                
+                from django.core.mail import send_mail
+                from django.conf import settings
+                from .email_templates import get_otp_email_html, get_otp_email_text
+                
+                try:
+                    send_mail(
+                        'Ken - Email Verification Code',
+                        get_otp_email_text(user.username, otp_code),
+                        settings.DEFAULT_FROM_EMAIL,
+                        [user.email],
+                        fail_silently=False,
+                        html_message=get_otp_email_html(user.username, otp_code)
+                    )
+                except:
+                    pass
+                
+                login(request, user)
+                messages.success(request, 'Account created! Please verify your email.')
+                return redirect('influencer_verify_email')
+            else:
+                UserProfile.objects.create(user=user, phone_number=phone_number or '')
+                login(request, user)
+                messages.success(request, 'Account created successfully!')
+                return redirect('dashboard')
     else:
         form = SignUpForm()
     
@@ -35,6 +90,10 @@ def signup_view(request):
 
 def login_view(request):
     if request.user.is_authenticated:
+        if hasattr(request.user, 'influencer_profile'):
+            if not request.user.influencer_profile.is_verified:
+                return redirect('influencer_verify_email')
+            return redirect('influencer_dashboard')
         return redirect('dashboard')
     
     if request.method == 'POST':
@@ -42,6 +101,11 @@ def login_view(request):
         if form.is_valid():
             user = form.get_user()
             login(request, user)
+            
+            if hasattr(user, 'influencer_profile'):
+                if not user.influencer_profile.is_verified:
+                    return redirect('influencer_verify_email')
+                return redirect('influencer_dashboard')
             return redirect('dashboard')
     else:
         form = LoginForm()
@@ -135,21 +199,21 @@ def complete_task_view(request, task_id):
             user=request.user,
             task=task,
             points_earned=task.points,
-            cfa_earned=task.cfa_value,
+            usd_earned=task.usd_value,
             is_verified=False if needs_proof else True,
             proof_screenshot=request.FILES.get('proof_screenshot') if needs_proof else None
         )
         
         if not needs_proof:
             profile.total_points += task.points
-            profile.total_earned_cfa += task.cfa_value
-            profile.available_balance_cfa += task.cfa_value
+            profile.total_earned_usd += task.usd_value
+            profile.available_balance_usd += task.usd_value
             profile.save()
             
             Transaction.objects.create(
                 user=request.user,
                 transaction_type='earning',
-                amount_cfa=task.cfa_value,
+                amount_usd=task.usd_value,
                 points=task.points,
                 status='completed'
             )
@@ -160,7 +224,7 @@ def complete_task_view(request, task_id):
         if needs_proof:
             messages.success(request, 'Task submitted! Waiting for admin verification.')
         else:
-            messages.success(request, f'Task completed! You earned {task.points} points and {task.cfa_value} CFA!')
+            messages.success(request, f'Task completed! You earned {task.points} points and ${task.usd_value}!')
         
         return redirect('dashboard')
     
@@ -203,60 +267,16 @@ def withdrawal_view(request):
                 
                 from django.core.mail import send_mail
                 from django.conf import settings
-                
-                email_html = f"""
-                <html>
-                <body style="margin: 0; padding: 0; font-family: 'Segoe UI', sans-serif; background-color: #000000;">
-                    <div style="max-width: 600px; margin: 0 auto; background-color: #121212;">
-                        <div style="background: linear-gradient(135deg, #32CD32 0%, #28a428 100%); padding: 40px 20px; text-align: center;">
-                            <h1 style="color: #000000; font-size: 36px; margin: 0; font-weight: bold;">Ken</h1>
-                            <p style="color: #000000; margin: 10px 0 0 0; font-size: 14px;">Earn Money Online</p>
-                        </div>
-                        
-                        <div style="padding: 40px 30px; background-color: #1a1a1a; border-left: 4px solid #32CD32;">
-                            <h2 style="color: #ffffff; font-size: 24px; margin: 0 0 20px 0;">Email Verification</h2>
-                            <p style="color: #cccccc; font-size: 16px; line-height: 1.6; margin: 0 0 30px 0;">
-                                Hello <strong style="color: #32CD32;">{request.user.username}</strong>,
-                            </p>
-                            <p style="color: #cccccc; font-size: 16px; line-height: 1.6; margin: 0 0 30px 0;">
-                                Use the code below to verify your email and complete your withdrawal setup:
-                            </p>
-                            
-                            <div style="background-color: #000000; border: 2px dashed #32CD32; border-radius: 12px; padding: 30px; text-align: center; margin: 30px 0;">
-                                <div style="color: #32CD32; font-size: 48px; font-weight: bold; letter-spacing: 8px; font-family: 'Courier New', monospace;">
-                                    {otp_code}
-                                </div>
-                            </div>
-                            
-                            <p style="color: #999999; font-size: 14px; line-height: 1.6; margin: 20px 0 0 0;">
-                                ⏱️ This code expires in <strong style="color: #32CD32;">10 minutes</strong>
-                            </p>
-                            <p style="color: #999999; font-size: 14px; line-height: 1.6; margin: 10px 0 0 0;">
-                                🔒 If you didn't request this code, please ignore this email.
-                            </p>
-                        </div>
-                        
-                        <div style="background-color: #0a0a0a; padding: 30px; text-align: center; border-top: 1px solid #2a2a2a;">
-                            <p style="color: #666666; font-size: 12px; margin: 0 0 10px 0;">
-                                © 2025 Ken. All rights reserved.
-                            </p>
-                            <p style="color: #666666; font-size: 12px; margin: 0;">
-                                Complete tasks, earn money instantly
-                            </p>
-                        </div>
-                    </div>
-                </body>
-                </html>
-                """
+                from .email_templates import get_otp_email_html, get_otp_email_text
                 
                 try:
                     send_mail(
                         'Ken - Email Verification Code',
-                        f'Your verification code is: {otp_code}\n\nThis code expires in 10 minutes.',
+                        get_otp_email_text(request.user.username, otp_code),
                         settings.DEFAULT_FROM_EMAIL,
                         [request.user.email],
                         fail_silently=False,
-                        html_message=email_html
+                        html_message=get_otp_email_html(request.user.username, otp_code)
                     )
                     messages.success(request, f'OTP sent to {request.user.email}')
                 except Exception as e:
@@ -304,13 +324,13 @@ def withdrawal_view(request):
                 return redirect('/withdrawal/?step=withdraw')
             
             if form.is_valid():
-                amount = form.cleaned_data['amount_cfa']
+                amount = form.cleaned_data['amount_usd']
                 
-                if amount < 5000:
-                    messages.error(request, 'Minimum withdrawal is 5000 CFA!')
+                if amount < 50:
+                    messages.error(request, 'Minimum withdrawal is $50!')
                     return redirect('/withdrawal/?step=withdraw')
                 
-                if amount > profile.available_balance_cfa:
+                if amount > profile.available_balance_usd:
                     messages.error(request, 'Insufficient balance!')
                     return redirect('/withdrawal/?step=withdraw')
                 
@@ -320,7 +340,7 @@ def withdrawal_view(request):
                 withdrawal.status = 'pending'
                 withdrawal.save()
                 
-                profile.available_balance_cfa -= amount
+                profile.available_balance_usd -= amount
                 profile.save()
                 
                 messages.success(request, 'Withdrawal submitted! Awaiting approval.')

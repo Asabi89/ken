@@ -1,0 +1,221 @@
+{% extends 'influencer/influencer_base.html' %}
+{% load i18n %}
+
+{% block title %}{{ task.title }} - Ken Influencer{% endblock %}
+
+{% block content %}
+<div class="space-y-6">
+    <div class="mb-8">
+        <a href="{% url 'influencer_task_list' %}" class="text-primary hover:underline inline-flex items-center mb-4">
+            <i class='bx bx-arrow-back mr-1'></i> {% trans "Back to My Tasks" %}
+        </a>
+    </div>
+    
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+        <div class="lg:col-span-2 space-y-6">
+            <div class="card rounded-xl overflow-hidden">
+                <div class="aspect-video bg-gray-900">
+                    <iframe 
+                        src="{{ task.get_embed_url }}" 
+                        class="w-full h-full"
+                        frameborder="0"
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                        allowfullscreen
+                    ></iframe>
+                </div>
+                
+                <div class="p-6">
+                    <div class="flex items-start justify-between mb-4">
+                        <div class="flex-1">
+                            <h1 class="text-2xl font-bold mb-2">{{ task.title }}</h1>
+                            <div class="flex flex-wrap gap-2">
+                                <span class="text-xs px-3 py-1 rounded-full {% if task.status == 'active' %}bg-green-900/30 text-green-300{% elif task.status == 'paused' %}bg-yellow-900/30 text-yellow-300{% else %}bg-gray-700 text-gray-300{% endif %}">
+                                    {{ task.get_status_display }}
+                                </span>
+                                <span class="text-xs px-3 py-1 rounded-full bg-blue-900/30 text-blue-300">
+                                    {{ task.get_task_type_display }}
+                                </span>
+                                <span class="text-xs px-3 py-1 rounded-full bg-purple-900/30 text-purple-300">
+                                    {{ task.get_category_display }}
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
+                        <div class="bg-gray-900 p-4 rounded-lg">
+                            <p class="text-xs text-gray-400 mb-1">{% trans "Reward" %}</p>
+                            <p class="text-lg font-bold text-primary">${{ task.usd_value }}</p>
+                            <p class="text-xs text-gray-500">{{ task.points }} points</p>
+                        </div>
+                        <div class="bg-gray-900 p-4 rounded-lg">
+                            <p class="text-xs text-gray-400 mb-1">{% trans "Duration" %}</p>
+                            <p class="text-lg font-bold">{{ task.minutes_to_complete }} min</p>
+                        </div>
+                        <div class="bg-gray-900 p-4 rounded-lg">
+                            <p class="text-xs text-gray-400 mb-1">{% trans "Completions" %}</p>
+                            <p class="text-lg font-bold">{{ task.current_completions }}</p>
+                            <p class="text-xs text-gray-500">of {{ task.max_completions }}</p>
+                        </div>
+                        <div class="bg-gray-900 p-4 rounded-lg">
+                            <p class="text-xs text-gray-400 mb-1">{% trans "Total Cost" %}</p>
+                            <p class="text-lg font-bold text-primary">${{ task.usd_value|floatformat:2 }}</p>
+                        </div>
+                    </div>
+                    
+                    <div class="mb-6">
+                        <div class="flex justify-between text-sm mb-2">
+                            <span class="text-gray-400">{% trans "Progress" %}</span>
+                            <span class="font-semibold">{% widthratio task.current_completions task.max_completions 100 %}%</span>
+                        </div>
+                        <div class="w-full bg-gray-800 rounded-full h-3">
+                            <div class="bg-primary h-3 rounded-full transition-all" style="width: {% widthratio task.current_completions task.max_completions 100 %}%"></div>
+                        </div>
+                    </div>
+                    
+                    <div class="flex flex-wrap gap-3">
+                        {% if task.status == 'active' %}
+                        <form method="post" class="flex-1">
+                            {% csrf_token %}
+                            <input type="hidden" name="action" value="pause">
+                            <button type="submit" class="w-full px-4 py-2 bg-yellow-600 hover:bg-yellow-700 text-white font-semibold rounded-lg transition">
+                                <i class='bx bx-pause mr-2'></i>{% trans "Pause Task" %}
+                            </button>
+                        </form>
+                        {% elif task.status == 'paused' %}
+                        <form method="post" class="flex-1">
+                            {% csrf_token %}
+                            <input type="hidden" name="action" value="activate">
+                            <button type="submit" class="w-full px-4 py-2 bg-primary hover:bg-green-600 text-black font-semibold rounded-lg transition">
+                                <i class='bx bx-play mr-2'></i>{% trans "Activate Task" %}
+                            </button>
+                        </form>
+                        {% endif %}
+                        
+                        <a href="{{ task.video_url }}" target="_blank" class="flex-1 px-4 py-2 bg-gray-800 hover:bg-gray-700 text-white text-center font-semibold rounded-lg transition">
+                            <i class='bx bx-link-external mr-2'></i>{% trans "Open Video" %}
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="space-y-6">
+            <div class="card rounded-xl p-6">
+                <h3 class="font-bold mb-4 flex items-center">
+                    <i class='bx bx-bar-chart text-primary mr-2'></i>
+                    {% trans "Statistics" %}
+                </h3>
+                
+                <div class="space-y-4">
+                    <div class="flex items-center justify-between p-3 bg-gray-900 rounded-lg">
+                        <span class="text-sm text-gray-400">{% trans "Verified" %}</span>
+                        <span class="font-bold text-green-400">{{ verified_count }}</span>
+                    </div>
+                    <div class="flex items-center justify-between p-3 bg-gray-900 rounded-lg">
+                        <span class="text-sm text-gray-400">{% trans "Pending" %}</span>
+                        <span class="font-bold text-yellow-400">{{ pending_count }}</span>
+                    </div>
+                    <div class="flex items-center justify-between p-3 bg-gray-900 rounded-lg">
+                        <span class="text-sm text-gray-400">{% trans "Total" %}</span>
+                        <span class="font-bold text-primary">{{ task.current_completions }}</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="card rounded-xl p-6">
+                <h3 class="font-bold mb-4 flex items-center">
+                    <i class='bx bx-info-circle text-primary mr-2'></i>
+                    {% trans "Task Information" %}
+                </h3>
+                
+                <div class="space-y-3 text-sm">
+                    <div>
+                        <p class="text-gray-400 mb-1">{% trans "Created" %}</p>
+                        <p class="font-semibold">{{ task.created_at|date:"M d, Y" }}</p>
+                    </div>
+                    {% if task.expires_at %}
+                    <div>
+                        <p class="text-gray-400 mb-1">{% trans "Expires" %}</p>
+                        <p class="font-semibold">{{ task.expires_at|date:"M d, Y" }}</p>
+                    </div>
+                    {% endif %}
+                    <div>
+                        <p class="text-gray-400 mb-1">{% trans "Video URL" %}</p>
+                        <a href="{{ task.video_url }}" target="_blank" class="text-primary hover:underline break-all">
+                            {{ task.video_url|truncatechars:40 }}
+                        </a>
+                    </div>
+                    {% if task.channel_url %}
+                    <div>
+                        <p class="text-gray-400 mb-1">{% trans "Channel URL" %}</p>
+                        <a href="{{ task.channel_url }}" target="_blank" class="text-primary hover:underline break-all">
+                            {{ task.channel_url|truncatechars:40 }}
+                        </a>
+                    </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="card rounded-xl p-6">
+        <h3 class="font-bold text-xl mb-6 flex items-center">
+            <i class='bx bx-user text-primary mr-2'></i>
+            {% trans "Recent Completions" %}
+        </h3>
+        
+        {% if completions %}
+        <div class="overflow-x-auto">
+            <table class="w-full">
+                <thead class="border-b border-gray-700">
+                    <tr>
+                        <th class="text-left py-3 px-4 text-sm font-semibold text-gray-400">{% trans "User" %}</th>
+                        <th class="text-left py-3 px-4 text-sm font-semibold text-gray-400">{% trans "Date" %}</th>
+                        <th class="text-left py-3 px-4 text-sm font-semibold text-gray-400">{% trans "Reward" %}</th>
+                        <th class="text-left py-3 px-4 text-sm font-semibold text-gray-400">{% trans "Status" %}</th>
+                        <th class="text-left py-3 px-4 text-sm font-semibold text-gray-400">{% trans "Action" %}</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for completion in completions %}
+                    <tr class="border-b border-gray-800 hover:bg-gray-900 transition">
+                        <td class="py-3 px-4">
+                            <div class="flex items-center space-x-2">
+                                <i class='bx bx-user-circle text-2xl text-gray-400'></i>
+                                <span class="font-semibold">{{ completion.user.username }}</span>
+                            </div>
+                        </td>
+                        <td class="py-3 px-4 text-sm text-gray-400">{{ completion.completed_at|date:"M d, Y H:i" }}</td>
+                        <td class="py-3 px-4 font-semibold text-primary">${{ completion.usd_earned }}</td>
+                        <td class="py-3 px-4">
+                            {% if completion.is_verified %}
+                            <span class="text-xs px-2 py-1 rounded bg-green-900/30 text-green-300">
+                                <i class='bx bx-check'></i> {% trans "Verified" %}
+                            </span>
+                            {% else %}
+                            <span class="text-xs px-2 py-1 rounded bg-yellow-900/30 text-yellow-300">
+                                <i class='bx bx-time'></i> {% trans "Pending" %}
+                            </span>
+                            {% endif %}
+                        </td>
+                        <td class="py-3 px-4">
+                            {% if not completion.is_verified and completion.proof_screenshot %}
+                            <a href="{% url 'influencer_approve_proof' completion.id %}" class="text-primary hover:underline text-sm">
+                                {% trans "Review" %}
+                            </a>
+                            {% else %}
+                            <span class="text-gray-600 text-sm">-</span>
+                            {% endif %}
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        {% else %}
+        <p class="text-center text-gray-400 py-8">{% trans "No completions yet" %}</p>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

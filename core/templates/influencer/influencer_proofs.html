@@ -1,0 +1,102 @@
+{% extends 'influencer/influencer_base.html' %}
+{% load i18n %}
+
+{% block title %}{% trans "Proof Verification" %} - Ken Influencer{% endblock %}
+
+{% block content %}
+<div class="space-y-6">
+    <div>
+        <h1 class="text-3xl font-bold mb-2">{% trans "Proof Verification" %}</h1>
+        <p class="text-gray-400">{% trans "Review and approve user submissions" %}</p>
+    </div>
+    
+    <div class="flex flex-wrap gap-3">
+        <a href="?status=pending" class="px-4 py-2 rounded-lg transition {% if current_status == 'pending' %}bg-primary text-black font-semibold{% else %}bg-gray-800 text-gray-300 hover:bg-gray-700{% endif %}">
+            {% trans "Pending" %}
+        </a>
+        <a href="?status=verified" class="px-4 py-2 rounded-lg transition {% if current_status == 'verified' %}bg-primary text-black font-semibold{% else %}bg-gray-800 text-gray-300 hover:bg-gray-700{% endif %}">
+            {% trans "Verified" %}
+        </a>
+        <a href="?status=all" class="px-4 py-2 rounded-lg transition {% if current_status == 'all' %}bg-primary text-black font-semibold{% else %}bg-gray-800 text-gray-300 hover:bg-gray-700{% endif %}">
+            {% trans "All" %}
+        </a>
+    </div>
+    
+    {% if proofs %}
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        {% for proof in proofs %}
+        <div class="card rounded-xl overflow-hidden">
+            <div class="aspect-video bg-gray-900 relative group">
+                {% if proof.proof_screenshot %}
+                <img src="{{ proof.proof_screenshot.url }}" alt="Proof screenshot" class="w-full h-full object-cover">
+                <a href="{{ proof.proof_screenshot.url }}" target="_blank" class="absolute inset-0 bg-black/60 flex items-center justify-center opacity-0 group-hover:opacity-100 transition">
+                    <i class='bx bx-search-alt text-4xl text-white'></i>
+                </a>
+                {% else %}
+                <div class="w-full h-full flex items-center justify-center">
+                    <i class='bx bx-image text-6xl text-gray-700'></i>
+                </div>
+                {% endif %}
+            </div>
+            
+            <div class="p-6">
+                <div class="flex items-center justify-between mb-4">
+                    <div class="flex items-center space-x-2">
+                        <i class='bx bx-user-circle text-2xl text-gray-400'></i>
+                        <div>
+                            <p class="font-semibold">{{ proof.user.username }}</p>
+                            <p class="text-xs text-gray-500">{{ proof.completed_at|date:"M d, Y H:i" }}</p>
+                        </div>
+                    </div>
+                    {% if proof.is_verified %}
+                    <span class="text-xs px-2 py-1 rounded bg-green-900/30 text-green-300">
+                        <i class='bx bx-check'></i> {% trans "Verified" %}
+                    </span>
+                    {% else %}
+                    <span class="text-xs px-2 py-1 rounded bg-yellow-900/30 text-yellow-300">
+                        <i class='bx bx-time'></i> {% trans "Pending" %}
+                    </span>
+                    {% endif %}
+                </div>
+                
+                <div class="bg-gray-900 p-3 rounded-lg mb-4">
+                    <p class="text-sm font-semibold mb-1 line-clamp-2">{{ proof.task.title }}</p>
+                    <div class="flex items-center justify-between text-xs text-gray-400">
+                        <span>{{ proof.task.get_task_type_display }}</span>
+                        <span class="text-primary font-semibold">${{ proof.usd_earned }}</span>
+                    </div>
+                </div>
+                
+                {% if not proof.is_verified %}
+                <div class="flex gap-2">
+                    <a href="{% url 'influencer_approve_proof' proof.id %}" class="flex-1 text-center px-4 py-2 bg-primary hover:bg-green-600 text-black font-semibold rounded-lg transition">
+                        {% trans "Review" %}
+                    </a>
+                </div>
+                {% else %}
+                <div class="text-center py-2">
+                    <p class="text-sm text-gray-500">{% trans "Verified by" %} {{ proof.verified_by.username }}</p>
+                    <p class="text-xs text-gray-600">{{ proof.verified_at|date:"M d, Y H:i" }}</p>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    {% else %}
+    <div class="card rounded-xl p-12 text-center">
+        <i class='bx bx-check-circle text-6xl text-gray-700 mb-4'></i>
+        <h3 class="text-xl font-bold mb-2">{% trans "No proofs found" %}</h3>
+        <p class="text-gray-400">
+            {% if current_status == 'pending' %}
+                {% trans "All proofs have been verified!" %}
+            {% elif current_status == 'verified' %}
+                {% trans "No verified proofs yet" %}
+            {% else %}
+                {% trans "No proof submissions yet" %}
+            {% endif %}
+        </p>
+    </div>
+    {% endif %}
+</div>
+{% endblock %}

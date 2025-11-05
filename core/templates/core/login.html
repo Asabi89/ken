@@ -1,6 +1,7 @@
 {% extends 'core/base.html' %}
+{% load i18n %}
 
-{% block title %}Login - Ken{% endblock %}
+{% block title %}{% trans "Login" %} - Ken{% endblock %}
 
 {% block content %}
 <div class="min-h-screen flex items-center justify-center py-12">
@@ -8,24 +9,24 @@
         
         <div class="text-center mb-8">
             <h1 class="text-5xl font-bold text-primary mb-3 font-slab">Ken</h1>
-            <p class="text-gray-400 text-lg">Welcome back!</p>
+            <p class="text-gray-400 text-lg">{% trans "Welcome back!" %}</p>
         </div>
         
         <div class="card p-6 rounded-2xl mb-6">
-            <h2 class="text-2xl font-bold text-white mb-6 font-slab">Login</h2>
+            <h2 class="text-2xl font-bold text-white mb-6 font-slab">{% trans "Login" %}</h2>
             
             <form method="post" class="space-y-4">
                 {% csrf_token %}
                 
                 {% if form.non_field_errors %}
                 <div class="bg-red-900/30 border border-red-500 text-red-300 p-3 rounded-lg text-sm">
-                    <i class='bx bx-error'></i> Invalid username or password
+                    <i class='bx bx-error'></i> {% trans "Invalid username or password" %}
                 </div>
                 {% endif %}
                 
                 <div>
                     <label for="{{ form.username.id_for_label }}" class="block text-gray-300 text-sm mb-2">
-                        <i class='bx bx-user'></i> Username
+                        <i class='bx bx-user'></i> {% trans "Username" %}
                     </label>
                     {{ form.username }}
                     {% if form.username.errors %}
@@ -35,7 +36,7 @@
                 
                 <div>
                     <label for="{{ form.password.id_for_label }}" class="block text-gray-300 text-sm mb-2">
-                        <i class='bx bx-lock'></i> Password
+                        <i class='bx bx-lock'></i> {% trans "Password" %}
                     </label>
                     {{ form.password }}
                     {% if form.password.errors %}
@@ -44,15 +45,15 @@
                 </div>
                 
                 <button type="submit" class="btn-primary w-full py-3 rounded-xl font-bold text-black text-lg mt-6">
-                    <i class='bx bx-log-in'></i> Login
+                    <i class='bx bx-log-in'></i> {% trans "Login" %}
                 </button>
             </form>
         </div>
         
         <div class="text-center">
             <p class="text-gray-400">
-                Don't have an account? 
-                <a href="{% url 'signup' %}" class="text-primary font-bold hover:underline">Sign Up</a>
+                {% trans "Don't have an account?" %} 
+                <a href="{% url 'signup' %}" class="text-primary font-bold hover:underline">{% trans "Sign Up" %}</a>
             </p>
         </div>
         

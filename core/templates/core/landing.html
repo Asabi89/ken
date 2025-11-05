@@ -1,9 +1,10 @@
+{% load i18n %}
 <!DOCTYPE html>
-<html lang="en">
+<html lang="{% get_current_language as LANGUAGE_CODE %}{{ LANGUAGE_CODE }}">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ken - Earn Money Online</title>
+    <title>Ken - {% trans "Earn Money Online" %}</title>
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -49,14 +50,7 @@
             box-shadow: 0 10px 20px rgba(50, 205, 50, 0.3);
         }
         
-        .hero-image {
-            animation: float 6s ease-in-out infinite;
-        }
-        
-        @keyframes float {
-            0%, 100% { transform: translateY(0px); }
-            50% { transform: translateY(-20px); }
-        }
+
         
         .fade-in {
             animation: fadeIn 1s ease-in;
@@ -75,8 +69,9 @@
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3 sm:py-4 flex items-center justify-between">
             <a href="/" class="text-xl sm:text-2xl font-bold text-primary">Ken</a>
             <div class="flex items-center space-x-2 sm:space-x-4">
-                <a href="{% url 'login' %}" class="text-sm sm:text-base text-gray-300 hover:text-primary transition px-3 sm:px-4 py-2">Login</a>
-                <a href="{% url 'signup' %}" class="btn-primary text-sm sm:text-base px-4 sm:px-6 py-2 rounded-lg font-medium text-black">Sign Up</a>
+                {% include 'core/language_switcher.html' %}
+                <a href="{% url 'login' %}" class="text-sm sm:text-base text-gray-300 hover:text-primary transition px-3 sm:px-4 py-2">{% trans "Login" %}</a>
+                <a href="{% url 'signup' %}" class="btn-primary text-sm sm:text-base px-4 sm:px-6 py-2 rounded-lg font-medium text-black">{% trans "Sign Up" %}</a>
             </div>
         </div>
     </nav>
@@ -94,46 +89,51 @@
                 <!-- Text Content -->
                 <div class="text-center lg:text-left fade-in">
                     <h1 class="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-4 sm:mb-6 leading-tight">
-                        Earn Money by Completing <span class="text-primary">Simple Tasks</span>
+                        {% trans "Earn Money by Completing" %} <span class="text-primary">{% trans "Simple Tasks" %}</span>
                     </h1>
                     <p class="text-base sm:text-lg md:text-xl text-gray-300 mb-6 sm:mb-8 leading-relaxed">
-                        Watch videos, like content, subscribe to channels and get paid instantly. Turn your time into money with Ken.
+                        {% trans "Watch videos, like content, subscribe to channels and get paid instantly. Turn your time into money with Ken." %}
                     </p>
                     <div class="flex flex-col sm:flex-row items-center justify-center lg:justify-start space-y-3 sm:space-y-0 sm:space-x-4">
                         <a href="{% url 'signup' %}" class="btn-primary w-full sm:w-auto px-6 sm:px-8 py-3 sm:py-4 rounded-lg font-medium text-black text-sm sm:text-base">
-                            Get Started Now
+                            {% trans "Get Started Now" %}
                         </a>
                         <a href="{% url 'login' %}" class="w-full sm:w-auto border-2 border-primary text-primary px-6 sm:px-8 py-3 sm:py-4 rounded-lg font-medium text-sm sm:text-base hover:bg-primary hover:text-black transition text-center">
-                            I Have an Account
+                            {% trans "I Have an Account" %}
                         </a>
                     </div>
+                    
+                    <p class="text-center lg:text-left text-gray-400 text-sm mt-4">
+                        {% trans "Are you a business or influencer?" %} 
+                        <a href="{% url 'influencer_signup' %}" class="text-primary hover:underline font-medium">{% trans "Join as Influencer" %}</a>
+                    </p>
                     
                     <!-- Stats -->
                     <div class="grid grid-cols-3 gap-4 sm:gap-6 mt-8 sm:mt-12">
                         <div>
                             <p class="text-2xl sm:text-3xl md:text-4xl font-bold text-primary">10k+</p>
-                            <p class="text-xs sm:text-sm text-gray-400 mt-1">Active Users</p>
+                            <p class="text-xs sm:text-sm text-gray-400 mt-1">{% trans "Active Users" %}</p>
                         </div>
                         <div>
                             <p class="text-2xl sm:text-3xl md:text-4xl font-bold text-primary">50k+</p>
-                            <p class="text-xs sm:text-sm text-gray-400 mt-1">Tasks Done</p>
+                            <p class="text-xs sm:text-sm text-gray-400 mt-1">{% trans "Tasks Done" %}</p>
                         </div>
                         <div>
                             <p class="text-2xl sm:text-3xl md:text-4xl font-bold text-primary">24/7</p>
-                            <p class="text-xs sm:text-sm text-gray-400 mt-1">Support</p>
+                            <p class="text-xs sm:text-sm text-gray-400 mt-1">{% trans "Support" %}</p>
                         </div>
                     </div>
                 </div>
                 
                 <!-- Hero Image -->
                 <div class="hidden lg:flex items-center justify-center">
-                    <div class="relative hero-image">
+                    <div class="relative">
                         <img src="https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?w=600&h=600&fit=crop" 
                              alt="Earning Money" 
                              class="w-full max-w-lg rounded-2xl shadow-2xl">
                         <div class="absolute -bottom-6 -right-6 bg-primary text-black px-6 py-4 rounded-xl shadow-xl">
-                            <p class="text-sm font-medium">Earn up to</p>
-                            <p class="text-2xl font-bold">50,000 CFA/month</p>
+                            <p class="text-sm font-medium">{% trans "Earn up to" %}</p>
+                            <p class="text-2xl font-bold">{% trans "$500/month" %}</p>
                         </div>
                     </div>
                 </div>
@@ -146,10 +146,10 @@
         <div class="max-w-7xl mx-auto">
             <div class="text-center mb-10 sm:mb-16">
                 <h2 class="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-white mb-3 sm:mb-4">
-                    Available <span class="text-primary">Tasks</span>
+                    {% trans "Available" %} <span class="text-primary">{% trans "Tasks" %}</span>
                 </h2>
                 <p class="text-sm sm:text-base md:text-lg text-gray-400 max-w-2xl mx-auto">
-                    Choose from a variety of simple tasks and start earning immediately
+                    {% trans "Choose from a variety of simple tasks and start earning immediately" %}
                 </p>
             </div>
             
@@ -162,9 +162,9 @@
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
                         </svg>
                     </div>
-                    <h3 class="text-lg sm:text-xl font-semibold text-white mb-2 sm:mb-3 text-center">Watch Videos</h3>
-                    <p class="text-sm sm:text-base text-gray-400 mb-4 sm:mb-6 text-center">Watch videos for 50 seconds and earn points instantly</p>
-                    <p class="text-primary font-bold text-2xl sm:text-3xl text-center">10 CFA</p>
+                    <h3 class="text-lg sm:text-xl font-semibold text-white mb-2 sm:mb-3 text-center">{% trans "Watch Videos" %}</h3>
+                    <p class="text-sm sm:text-base text-gray-400 mb-4 sm:mb-6 text-center">{% trans "Watch videos for 50 seconds and earn 100 points" %}</p>
+                    <p class="text-primary font-bold text-2xl sm:text-3xl text-center">$0.50</p>
                 </div>
                 
                 <!-- Like Content -->
@@ -174,9 +174,9 @@
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 10h4.764a2 2 0 011.789 2.894l-3.5 7A2 2 0 0115.263 21h-4.017c-.163 0-.326-.02-.485-.06L7 20m7-10V5a2 2 0 00-2-2h-.095c-.5 0-.905.405-.905.905 0 .714-.211 1.412-.608 2.006L7 11v9m7-10h-2M7 20H5a2 2 0 01-2-2v-6a2 2 0 012-2h2.5"/>
                         </svg>
                     </div>
-                    <h3 class="text-lg sm:text-xl font-semibold text-white mb-2 sm:mb-3 text-center">Like Content</h3>
-                    <p class="text-sm sm:text-base text-gray-400 mb-4 sm:mb-6 text-center">Like videos and show your support to earn rewards</p>
-                    <p class="text-primary font-bold text-2xl sm:text-3xl text-center">10 CFA</p>
+                    <h3 class="text-lg sm:text-xl font-semibold text-white mb-2 sm:mb-3 text-center">{% trans "Like Content" %}</h3>
+                    <p class="text-sm sm:text-base text-gray-400 mb-4 sm:mb-6 text-center">{% trans "Like videos and earn 100 points per task" %}</p>
+                    <p class="text-primary font-bold text-2xl sm:text-3xl text-center">$0.50</p>
                 </div>
                 
                 <!-- Subscribe -->
@@ -186,9 +186,9 @@
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M18 9v3m0 0v3m0-3h3m-3 0h-3m-2-5a4 4 0 11-8 0 4 4 0 018 0zM3 20a6 6 0 0112 0v1H3v-1z"/>
                         </svg>
                     </div>
-                    <h3 class="text-lg sm:text-xl font-semibold text-white mb-2 sm:mb-3 text-center">Subscribe</h3>
-                    <p class="text-sm sm:text-base text-gray-400 mb-4 sm:mb-6 text-center">Subscribe to channels and earn double rewards</p>
-                    <p class="text-primary font-bold text-2xl sm:text-3xl text-center">20 CFA</p>
+                    <h3 class="text-lg sm:text-xl font-semibold text-white mb-2 sm:mb-3 text-center">{% trans "Subscribe" %}</h3>
+                    <p class="text-sm sm:text-base text-gray-400 mb-4 sm:mb-6 text-center">{% trans "Subscribe to channels and earn 150 points" %}</p>
+                    <p class="text-primary font-bold text-2xl sm:text-3xl text-center">$0.70</p>
                 </div>
             </div>
         </div>
@@ -199,36 +199,36 @@
         <div class="max-w-6xl mx-auto">
             <div class="text-center mb-10 sm:mb-16">
                 <h2 class="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-white mb-3 sm:mb-4">
-                    How It <span class="text-primary">Works</span>
+                    {% trans "How It" %} <span class="text-primary">{% trans "Works" %}</span>
                 </h2>
                 <p class="text-sm sm:text-base md:text-lg text-gray-400 max-w-2xl mx-auto">
-                    Start earning in 4 simple steps
+                    {% trans "Start earning in 4 simple steps" %}
                 </p>
             </div>
             
             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-8 lg:gap-10">
                 <div class="text-center">
                     <div class="w-16 h-16 sm:w-20 sm:h-20 bg-primary rounded-full flex items-center justify-center mx-auto mb-4 sm:mb-6 text-xl sm:text-2xl font-bold text-black shadow-lg">1</div>
-                    <h3 class="text-lg sm:text-xl font-semibold text-white mb-2 sm:mb-3">Sign Up</h3>
-                    <p class="text-sm sm:text-base text-gray-400">Create your free account in seconds</p>
+                    <h3 class="text-lg sm:text-xl font-semibold text-white mb-2 sm:mb-3">{% trans "Sign Up" %}</h3>
+                    <p class="text-sm sm:text-base text-gray-400">{% trans "Create your free account in seconds" %}</p>
                 </div>
                 
                 <div class="text-center">
                     <div class="w-16 h-16 sm:w-20 sm:h-20 bg-primary rounded-full flex items-center justify-center mx-auto mb-4 sm:mb-6 text-xl sm:text-2xl font-bold text-black shadow-lg">2</div>
-                    <h3 class="text-lg sm:text-xl font-semibold text-white mb-2 sm:mb-3">Complete Tasks</h3>
-                    <p class="text-sm sm:text-base text-gray-400">Choose from available tasks and complete them</p>
+                    <h3 class="text-lg sm:text-xl font-semibold text-white mb-2 sm:mb-3">{% trans "Complete Tasks" %}</h3>
+                    <p class="text-sm sm:text-base text-gray-400">{% trans "Choose from available tasks and complete them" %}</p>
                 </div>
                 
                 <div class="text-center">
                     <div class="w-16 h-16 sm:w-20 sm:h-20 bg-primary rounded-full flex items-center justify-center mx-auto mb-4 sm:mb-6 text-xl sm:text-2xl font-bold text-black shadow-lg">3</div>
-                    <h3 class="text-lg sm:text-xl font-semibold text-white mb-2 sm:mb-3">Earn Points</h3>
-                    <p class="text-sm sm:text-base text-gray-400">Get instant points that convert to cash</p>
+                    <h3 class="text-lg sm:text-xl font-semibold text-white mb-2 sm:mb-3">{% trans "Earn Points" %}</h3>
+                    <p class="text-sm sm:text-base text-gray-400">{% trans "Get instant points that convert to cash" %}</p>
                 </div>
                 
                 <div class="text-center">
                     <div class="w-16 h-16 sm:w-20 sm:h-20 bg-primary rounded-full flex items-center justify-center mx-auto mb-4 sm:mb-6 text-xl sm:text-2xl font-bold text-black shadow-lg">4</div>
-                    <h3 class="text-lg sm:text-xl font-semibold text-white mb-2 sm:mb-3">Withdraw</h3>
-                    <p class="text-sm sm:text-base text-gray-400">Cash out via mobile money (min. 5000 CFA)</p>
+                    <h3 class="text-lg sm:text-xl font-semibold text-white mb-2 sm:mb-3">{% trans "Withdraw" %}</h3>
+                    <p class="text-sm sm:text-base text-gray-400">{% trans "Cash out via mobile money (min. $50)" %}</p>
                 </div>
             </div>
         </div>
@@ -239,48 +239,48 @@
         <div class="max-w-7xl mx-auto">
             <div class="text-center mb-10 sm:mb-16">
                 <h2 class="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-white mb-3 sm:mb-4">
-                    Why Choose <span class="text-primary">Ken?</span>
+                    {% trans "Why Choose" %} <span class="text-primary">{% trans "Ken?" %}</span>
                 </h2>
                 <p class="text-sm sm:text-base md:text-lg text-gray-400 max-w-2xl mx-auto">
-                    Join thousands of satisfied users earning daily
+                    {% trans "Join thousands of satisfied users earning daily" %}
                 </p>
             </div>
             
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
                 <div class="bg-gray-900/50 backdrop-blur p-6 sm:p-8 rounded-xl border border-gray-800">
                     <div class="text-primary text-3xl sm:text-4xl mb-3 sm:mb-4"><i class='bx  bx-plane-alt'  ></i> </div>
-                    <h3 class="text-lg sm:text-xl font-semibold text-white mb-2 sm:mb-3">Instant Payments</h3>
-                    <p class="text-sm sm:text-base text-gray-400">Receive your earnings immediately after completing tasks</p>
+                    <h3 class="text-lg sm:text-xl font-semibold text-white mb-2 sm:mb-3">{% trans "Instant Payments" %}</h3>
+                    <p class="text-sm sm:text-base text-gray-400">{% trans "Receive your earnings immediately after completing tasks" %}</p>
                 </div>
                 
                 <div class="bg-gray-900/50 backdrop-blur p-6 sm:p-8 rounded-xl border border-gray-800">
                     <div class="text-primary text-3xl sm:text-4xl mb-3 sm:mb-4"><i class='bx  bx-lock'  ></i> </div>
-                    <h3 class="text-lg sm:text-xl font-semibold text-white mb-2 sm:mb-3">Secure Platform</h3>
-                    <p class="text-sm sm:text-base text-gray-400">Your data and earnings are protected with top security</p>
+                    <h3 class="text-lg sm:text-xl font-semibold text-white mb-2 sm:mb-3">{% trans "Secure Platform" %}</h3>
+                    <p class="text-sm sm:text-base text-gray-400">{% trans "Your data and earnings are protected with top security" %}</p>
                 </div>
                 
                 <div class="bg-gray-900/50 backdrop-blur p-6 sm:p-8 rounded-xl border border-gray-800">
                     <div class="text-primary text-3xl sm:text-4xl mb-3 sm:mb-4"><i class='bx  bx-mobile-back-alt'  ></i> </div>
-                    <h3 class="text-lg sm:text-xl font-semibold text-white mb-2 sm:mb-3">Mobile Friendly</h3>
-                    <p class="text-sm sm:text-base text-gray-400">Work from anywhere using your phone or computer</p>
+                    <h3 class="text-lg sm:text-xl font-semibold text-white mb-2 sm:mb-3">{% trans "Mobile Friendly" %}</h3>
+                    <p class="text-sm sm:text-base text-gray-400">{% trans "Work from anywhere using your phone or computer" %}</p>
                 </div>
                 
                 <div class="bg-gray-900/50 backdrop-blur p-6 sm:p-8 rounded-xl border border-gray-800">
                     <div class="text-primary text-3xl sm:text-4xl mb-3 sm:mb-4"><i class='bx  bx-dollar-circle'  ></i> </div>
-                    <h3 class="text-lg sm:text-xl font-semibold text-white mb-2 sm:mb-3">No Investment</h3>
-                    <p class="text-sm sm:text-base text-gray-400">Start earning without any upfront cost or fees</p>
+                    <h3 class="text-lg sm:text-xl font-semibold text-white mb-2 sm:mb-3">{% trans "No Investment" %}</h3>
+                    <p class="text-sm sm:text-base text-gray-400">{% trans "Start earning without any upfront cost or fees" %}</p>
                 </div>
                 
                 <div class="bg-gray-900/50 backdrop-blur p-6 sm:p-8 rounded-xl border border-gray-800">
                     <div class="text-primary text-3xl sm:text-4xl mb-3 sm:mb-4"><i class='bx  bx-globe'  ></i> </div>
-                    <h3 class="text-lg sm:text-xl font-semibold text-white mb-2 sm:mb-3">Global Access</h3>
-                    <p class="text-sm sm:text-base text-gray-400">Available worldwide, earn in your local currency</p>
+                    <h3 class="text-lg sm:text-xl font-semibold text-white mb-2 sm:mb-3">{% trans "Global Access" %}</h3>
+                    <p class="text-sm sm:text-base text-gray-400">{% trans "Available worldwide, earn in your local currency" %}</p>
                 </div>
                 
                 <div class="bg-gray-900/50 backdrop-blur p-6 sm:p-8 rounded-xl border border-gray-800">
                     <div class="text-primary text-3xl sm:text-4xl mb-3 sm:mb-4"><i class='bx  bx-checkbox-checked'  ></i> </div>
-                    <h3 class="text-lg sm:text-xl font-semibold text-white mb-2 sm:mb-3">Simple Tasks</h3>
-                    <p class="text-sm sm:text-base text-gray-400">Easy tasks that anyone can complete quickly</p>
+                    <h3 class="text-lg sm:text-xl font-semibold text-white mb-2 sm:mb-3">{% trans "Simple Tasks" %}</h3>
+                    <p class="text-sm sm:text-base text-gray-400">{% trans "Easy tasks that anyone can complete quickly" %}</p>
                 </div>
             </div>
         </div>
@@ -291,10 +291,10 @@
         <div class="max-w-6xl mx-auto">
             <div class="text-center mb-10 sm:mb-16">
                 <h2 class="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-white mb-3 sm:mb-4">
-                    What Our <span class="text-primary">Users Say</span>
+                    {% trans "What Our" %} <span class="text-primary">{% trans "Users Say" %}</span>
                 </h2>
                 <p class="text-sm sm:text-base md:text-lg text-gray-400 max-w-2xl mx-auto">
-                    Real stories from real people earning with Ken
+                    {% trans "Real stories from real people earning with Ken" %}
                 </p>
             </div>
             
@@ -304,10 +304,10 @@
                         <div class="w-10 h-10 sm:w-12 sm:h-12 bg-primary rounded-full flex items-center justify-center text-black font-bold text-sm sm:text-base">AM</div>
                         <div class="ml-3 sm:ml-4">
                             <p class="text-sm sm:text-base font-semibold text-white">Amadou M.</p>
-                            <p class="text-xs sm:text-sm text-gray-400">Student</p>
+                            <p class="text-xs sm:text-sm text-gray-400">{% trans "Student" %}</p>
                         </div>
                     </div>
-                    <p class="text-sm sm:text-base text-gray-300">Ken helped me earn extra money while studying. The tasks are simple and payments are fast!</p>
+                    <p class="text-sm sm:text-base text-gray-300">{% trans "Ken helped me earn extra money while studying. The tasks are simple and payments are fast!" %}</p>
                 </div>
                 
                 <div class="bg-gray-900/50 backdrop-blur p-6 sm:p-8 rounded-xl border border-gray-800">
@@ -315,10 +315,10 @@
                         <div class="w-10 h-10 sm:w-12 sm:h-12 bg-primary rounded-full flex items-center justify-center text-black font-bold text-sm sm:text-base">FS</div>
                         <div class="ml-3 sm:ml-4">
                             <p class="text-sm sm:text-base font-semibold text-white">Fatou S.</p>
-                            <p class="text-xs sm:text-sm text-gray-400">Entrepreneur</p>
+                            <p class="text-xs sm:text-sm text-gray-400">{% trans "Entrepreneur" %}</p>
                         </div>
                     </div>
-                    <p class="text-sm sm:text-base text-gray-300">I've earned over 100,000 CFA in just 3 months! This platform is legit and trustworthy.</p>
+                    <p class="text-sm sm:text-base text-gray-300">{% trans "I've earned over $1000 in just 3 months! This platform is legit and trustworthy." %}</p>
                 </div>
                 
                 <div class="bg-gray-900/50 backdrop-blur p-6 sm:p-8 rounded-xl border border-gray-800 md:col-span-2 lg:col-span-1">
@@ -326,10 +326,10 @@
                         <div class="w-10 h-10 sm:w-12 sm:h-12 bg-primary rounded-full flex items-center justify-center text-black font-bold text-sm sm:text-base">ID</div>
                         <div class="ml-3 sm:ml-4">
                             <p class="text-sm sm:text-base font-semibold text-white">Ibrahim D.</p>
-                            <p class="text-xs sm:text-sm text-gray-400">Freelancer</p>
+                            <p class="text-xs sm:text-sm text-gray-400">{% trans "Freelancer" %}</p>
                         </div>
                     </div>
-                    <p class="text-sm sm:text-base text-gray-300">Perfect side hustle! I complete tasks during my free time and the money adds up quickly.</p>
+                    <p class="text-sm sm:text-base text-gray-300">{% trans "Perfect side hustle! I complete tasks during my free time and the money adds up quickly." %}</p>
                 </div>
             </div>
         </div>
@@ -339,15 +339,15 @@
     <section class="py-16 sm:py-20 lg:py-24 px-4 sm:px-6 lg:px-8 bg-gradient-to-r from-gray-900 via-black to-gray-900">
         <div class="max-w-4xl mx-auto text-center">
             <h2 class="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-white mb-4 sm:mb-6">
-                Ready to Start <span class="text-primary">Earning?</span>
+                {% trans "Ready to Start" %} <span class="text-primary">{% trans "Earning?" %}</span>
             </h2>
             <p class="text-sm sm:text-base md:text-lg lg:text-xl text-gray-300 mb-8 sm:mb-12">
-                Join thousands of users already making money with Ken
+                {% trans "Join thousands of users already making money with Ken" %}
             </p>
             <a href="{% url 'signup' %}" class="btn-primary inline-block px-8 sm:px-12 lg:px-16 py-3 sm:py-4 lg:py-5 rounded-lg font-medium text-black text-sm sm:text-base lg:text-lg shadow-2xl">
-                Create Your Account
+                {% trans "Create Your Account" %}
             </a>
-            <p class="text-xs sm:text-sm text-gray-400 mt-4 sm:mt-6">No credit card required • Start earning in minutes</p>
+            <p class="text-xs sm:text-sm text-gray-400 mt-4 sm:mt-6">{% trans "No credit card required • Start earning in minutes" %}</p>
         </div>
     </section>
     

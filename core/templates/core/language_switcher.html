@@ -1,0 +1,21 @@
+{% load i18n %}
+
+<div class="language-switcher flex items-center space-x-1">
+    {% get_current_language as LANGUAGE_CODE %}
+    <form action="{% url 'set_language' %}" method="post" style="display: inline;">
+        {% csrf_token %}
+        <input name="next" type="hidden" value="{{ request.get_full_path }}">
+        <input type="hidden" name="language" value="en">
+        <button type="submit" class="px-3 py-1.5 rounded-md text-sm font-medium transition {% if LANGUAGE_CODE == 'en' %}bg-primary text-black{% else %}text-gray-300 hover:text-white{% endif %}">
+            EN
+        </button>
+    </form>
+    <form action="{% url 'set_language' %}" method="post" style="display: inline;">
+        {% csrf_token %}
+        <input name="next" type="hidden" value="{{ request.get_full_path }}">
+        <input type="hidden" name="language" value="fr">
+        <button type="submit" class="px-3 py-1.5 rounded-md text-sm font-medium transition {% if LANGUAGE_CODE == 'fr' %}bg-primary text-black{% else %}text-gray-300 hover:text-white{% endif %}">
+            FR
+        </button>
+    </form>
+</div>

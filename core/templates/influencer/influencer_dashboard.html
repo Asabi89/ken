@@ -1,0 +1,213 @@
+{% extends 'influencer/influencer_base.html' %}
+{% load i18n %}
+
+{% block title %}{% trans "Influencer Dashboard" %} - Ken{% endblock %}
+
+{% block content %}
+<div class="space-y-6">
+    <div class="flex flex-col md:flex-row md:items-center md:justify-between">
+        <div>
+            <h1 class="text-3xl font-bold mb-2">{% trans "Welcome back" %}, {{ user.username }}!</h1>
+            <p class="text-gray-400">
+                {% if influencer_profile.status == 'pending' %}
+                    <span class="inline-flex items-center px-3 py-1 rounded-full text-sm bg-yellow-900/30 border border-yellow-500 text-yellow-300">
+                        <i class='bx bx-time-five mr-1'></i>
+                        {% trans "Account Pending Approval" %}
+                    </span>
+                {% elif influencer_profile.status == 'approved' %}
+                    <span class="inline-flex items-center px-3 py-1 rounded-full text-sm bg-green-900/30 border border-green-500 text-green-300">
+                        <i class='bx bx-check-circle mr-1'></i>
+                        {% trans "Account Approved" %}
+                    </span>
+                {% elif influencer_profile.status == 'rejected' %}
+                    <span class="inline-flex items-center px-3 py-1 rounded-full text-sm bg-red-900/30 border border-red-500 text-red-300">
+                        <i class='bx bx-x-circle mr-1'></i>
+                        {% trans "Account Rejected" %}
+                    </span>
+                {% endif %}
+            </p>
+        </div>
+        
+        {% if influencer_profile.status == 'approved' %}
+        <a href="{% url 'influencer_task_create' %}" class="mt-4 md:mt-0 inline-flex items-center px-6 py-3 bg-primary hover:bg-green-600 text-black font-bold rounded-lg transition">
+            <i class='bx bx-plus-circle text-xl mr-2'></i>
+            {% trans "Create New Task" %}
+        </a>
+        {% endif %}
+    </div>
+    
+    {% if influencer_profile.status == 'pending' %}
+    <div class="card rounded-xl p-8 border-2 border-yellow-500/50 text-center">
+        <div class="w-20 h-20 bg-yellow-500/20 rounded-full flex items-center justify-center mx-auto mb-4">
+            <i class='bx bx-time-five text-5xl text-yellow-400'></i>
+        </div>
+        <h2 class="text-2xl font-bold mb-3">{% trans "Account Pending Verification" %}</h2>
+        <p class="text-gray-300 mb-6 max-w-2xl mx-auto">
+            {% trans "Thank you for registering as an influencer! Your account is currently being reviewed by our admin team. You will be notified once your account has been approved." %}
+        </p>
+        <div class="bg-gray-900 rounded-lg p-6 mb-6 max-w-xl mx-auto">
+            <h3 class="font-semibold mb-3 flex items-center justify-center">
+                <i class='bx bx-info-circle text-primary mr-2'></i>
+                {% trans "Need Help?" %}
+            </h3>
+            <p class="text-gray-400 text-sm mb-4">
+                {% trans "If you have any questions or need assistance, please contact our support team via WhatsApp." %}
+            </p>
+            <a href="https://wa.me/330759113175?text=Hello,%20I%20need%20help%20with%20my%20influencer%20account%20verification" 
+               target="_blank"
+               class="inline-flex items-center px-6 py-3 bg-green-600 hover:bg-green-700 text-white font-bold rounded-lg transition">
+                <i class='bx bxl-whatsapp text-2xl mr-2'></i>
+                {% trans "Contact Support on WhatsApp" %}
+            </a>
+        </div>
+        <p class="text-sm text-gray-500">
+            {% trans "Average approval time: 24-48 hours" %}
+        </p>
+    </div>
+    {% elif influencer_profile.status == 'rejected' %}
+    <div class="card rounded-xl p-8 border-2 border-red-500/50 text-center">
+        <div class="w-20 h-20 bg-red-500/20 rounded-full flex items-center justify-center mx-auto mb-4">
+            <i class='bx bx-x-circle text-5xl text-red-400'></i>
+        </div>
+        <h2 class="text-2xl font-bold mb-3">{% trans "Account Rejected" %}</h2>
+        <p class="text-gray-300 mb-6 max-w-2xl mx-auto">
+            {% trans "Unfortunately, your influencer account application has been rejected. Please contact support for more information." %}
+        </p>
+        <a href="https://wa.me/330759113175?text=Hello,%20my%20influencer%20account%20was%20rejected" 
+           target="_blank"
+           class="inline-flex items-center px-6 py-3 bg-green-600 hover:bg-green-700 text-white font-bold rounded-lg transition">
+            <i class='bx bxl-whatsapp text-2xl mr-2'></i>
+            {% trans "Contact Support on WhatsApp" %}
+        </a>
+    </div>
+    {% endif %}
+    
+    {% if influencer_profile.status == 'approved' %}
+    
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+        <div class="card rounded-xl p-6">
+            <div class="flex items-center justify-between mb-4">
+                <div class="p-3 bg-primary/20 rounded-lg">
+                    <i class='bx bx-task text-3xl text-primary'></i>
+                </div>
+            </div>
+            <p class="text-gray-400 text-sm mb-1">{% trans "Total Tasks" %}</p>
+            <p class="text-3xl font-bold">{{ total_tasks }}</p>
+        </div>
+        
+        <div class="card rounded-xl p-6">
+            <div class="flex items-center justify-between mb-4">
+                <div class="p-3 bg-blue-500/20 rounded-lg">
+                    <i class='bx bx-check-circle text-3xl text-blue-400'></i>
+                </div>
+            </div>
+            <p class="text-gray-400 text-sm mb-1">{% trans "Total Completions" %}</p>
+            <p class="text-3xl font-bold">{{ total_completions }}</p>
+        </div>
+        
+        <div class="card rounded-xl p-6">
+            <div class="flex items-center justify-between mb-4">
+                <div class="p-3 bg-yellow-500/20 rounded-lg">
+                    <i class='bx bx-time text-3xl text-yellow-400'></i>
+                </div>
+            </div>
+            <p class="text-gray-400 text-sm mb-1">{% trans "Pending Proofs" %}</p>
+            <p class="text-3xl font-bold">{{ pending_proofs }}</p>
+        </div>
+        
+        <div class="card rounded-xl p-6">
+            <div class="flex items-center justify-between mb-4">
+                <div class="p-3 bg-green-500/20 rounded-lg">
+                    <i class='bx bx-dollar text-3xl text-green-400'></i>
+                </div>
+            </div>
+            <p class="text-gray-400 text-sm mb-1">{% trans "Budget Spent" %}</p>
+            <p class="text-3xl font-bold">${{ total_budget|floatformat:2 }}</p>
+        </div>
+    </div>
+    
+    {% if pending_proofs > 0 %}
+    <div class="card rounded-xl p-6 border-yellow-500/50">
+        <div class="flex items-center justify-between mb-4">
+            <h3 class="text-xl font-bold flex items-center">
+                <i class='bx bx-info-circle text-yellow-400 mr-2'></i>
+                {% trans "Action Required" %}
+            </h3>
+            <a href="{% url 'influencer_proofs' %}" class="text-primary hover:underline">{% trans "View All" %}</a>
+        </div>
+        <p class="text-gray-300">
+            {% blocktrans count counter=pending_proofs %}
+                You have {{ counter }} proof waiting for your review.
+            {% plural %}
+                You have {{ counter }} proofs waiting for your review.
+            {% endblocktrans %}
+        </p>
+    </div>
+    {% endif %}
+    
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+        <div class="card rounded-xl p-6">
+            <div class="flex items-center justify-between mb-6">
+                <h3 class="text-xl font-bold">{% trans "Recent Tasks" %}</h3>
+                <a href="{% url 'influencer_task_list' %}" class="text-primary hover:underline text-sm">{% trans "View All" %}</a>
+            </div>
+            
+            {% if recent_tasks %}
+            <div class="space-y-4">
+                {% for task in recent_tasks %}
+                <a href="{% url 'influencer_task_detail' task.id %}" class="block p-4 bg-gray-900 hover:bg-gray-800 rounded-lg transition">
+                    <div class="flex items-center justify-between mb-2">
+                        <h4 class="font-semibold truncate">{{ task.title }}</h4>
+                        <span class="text-xs px-2 py-1 rounded {% if task.status == 'active' %}bg-green-900/30 text-green-300{% elif task.status == 'paused' %}bg-yellow-900/30 text-yellow-300{% else %}bg-gray-700 text-gray-300{% endif %}">
+                            {{ task.get_status_display }}
+                        </span>
+                    </div>
+                    <div class="flex items-center justify-between text-sm text-gray-400">
+                        <span>{{ task.current_completions }}/{{ task.max_completions }} {% trans "completed" %}</span>
+                        <span class="text-primary font-semibold">${{ task.usd_value }}</span>
+                    </div>
+                </a>
+                {% endfor %}
+            </div>
+            {% else %}
+            <p class="text-gray-400 text-center py-8">{% trans "No tasks yet. Create your first task!" %}</p>
+            {% endif %}
+        </div>
+        
+        <div class="card rounded-xl p-6">
+            <div class="flex items-center justify-between mb-6">
+                <h3 class="text-xl font-bold">{% trans "Recent Completions" %}</h3>
+            </div>
+            
+            {% if recent_completions %}
+            <div class="space-y-4">
+                {% for completion in recent_completions %}
+                <div class="p-4 bg-gray-900 rounded-lg">
+                    <div class="flex items-center justify-between mb-2">
+                        <div class="flex items-center space-x-2">
+                            <i class='bx bx-user-circle text-2xl text-gray-400'></i>
+                            <div>
+                                <p class="font-semibold text-sm">{{ completion.user.username }}</p>
+                                <p class="text-xs text-gray-400">{{ completion.task.title|truncatechars:30 }}</p>
+                            </div>
+                        </div>
+                        <div class="text-right">
+                            <p class="text-sm font-semibold text-primary">${{ completion.usd_earned }}</p>
+                            {% if completion.is_verified %}
+                            <span class="text-xs text-green-400"><i class='bx bx-check'></i> {% trans "Verified" %}</span>
+                            {% else %}
+                            <span class="text-xs text-yellow-400"><i class='bx bx-time'></i> {% trans "Pending" %}</span>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+            {% else %}
+            <p class="text-gray-400 text-center py-8">{% trans "No completions yet" %}</p>
+            {% endif %}
+        </div>
+    </div>
+    {% endif %}
+</div>
+{% endblock %}

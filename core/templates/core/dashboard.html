@@ -1,13 +1,14 @@
 {% extends 'core/base.html' %}
+{% load i18n %}
 
-{% block title %}Dashboard - Ken{% endblock %}
+{% block title %}{% trans "Dashboard" %} - Ken{% endblock %}
 
 {% block content %}
 <div class="pb-20 md:pb-6">
     
     <div class="mb-6">
-        <h1 class="text-3xl font-bold text-primary font-slab mb-2">Welcome, {{ user.username }}</h1>
-        <p class="text-gray-400">Complete tasks and earn money</p>
+        <h1 class="text-3xl font-bold text-primary font-slab mb-2">{% blocktrans with username=user.username %}Welcome, {{ username }}{% endblocktrans %}</h1>
+        <p class="text-gray-400">{% trans "Complete tasks and earn money" %}</p>
     </div>
     
     <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
@@ -15,7 +16,7 @@
             <div class="flex items-center justify-between mb-2">
                 <i class='bx bx-diamond text-3xl text-primary'></i>
             </div>
-            <p class="text-gray-400 text-sm">Total Points</p>
+            <p class="text-gray-400 text-sm">{% trans "Total Points" %}</p>
             <p class="text-2xl font-bold text-white">{{ profile.total_points|default:0 }}</p>
         </div>
         
@@ -23,23 +24,23 @@
             <div class="flex items-center justify-between mb-2">
                 <i class='bx bx-wallet text-3xl text-primary'></i>
             </div>
-            <p class="text-gray-400 text-sm">Available Balance</p>
-            <p class="text-2xl font-bold text-primary">{{ profile.available_balance_cfa|default:0 }} CFA</p>
+            <p class="text-gray-400 text-sm">{% trans "Available Balance" %}</p>
+            <p class="text-2xl font-bold text-primary">${{ profile.available_balance_usd|default:0 }}</p>
         </div>
         
         <div class="card p-4 rounded-xl">
             <div class="flex items-center justify-between mb-2">
                 <i class='bx bx-money text-3xl text-green-400'></i>
             </div>
-            <p class="text-gray-400 text-sm">Total Earned</p>
-            <p class="text-2xl font-bold text-green-400">{{ profile.total_earned_cfa|default:0 }} CFA</p>
+            <p class="text-gray-400 text-sm">{% trans "Total Earned" %}</p>
+            <p class="text-2xl font-bold text-green-400">${{ profile.total_earned_usd|default:0 }}</p>
         </div>
         
         <div class="card p-4 rounded-xl">
             <div class="flex items-center justify-between mb-2">
                 <i class='bx bx-check-circle text-3xl text-blue-400'></i>
             </div>
-            <p class="text-gray-400 text-sm">Tasks Done</p>
+            <p class="text-gray-400 text-sm">{% trans "Tasks Done" %}</p>
             <p class="text-2xl font-bold text-blue-400">{{ recent_completions|length }}</p>
         </div>
     </div>
@@ -47,15 +48,15 @@
     <div class="mb-6">
         <a href="{% url 'withdrawal' %}" class="btn-primary w-full py-4 rounded-xl font-bold text-lg text-black flex items-center justify-center space-x-2">
             <i class='bx bx-money text-2xl'></i>
-            <span>Withdraw Money</span>
+            <span>{% trans "Withdraw Money" %}</span>
         </a>
     </div>
     
     <div class="mb-6">
         <div class="flex items-center justify-between mb-4">
-            <h2 class="text-xl font-bold text-white font-slab">Available Tasks</h2>
+            <h2 class="text-xl font-bold text-white font-slab">{% trans "Available Tasks" %}</h2>
             <a href="{% url 'task_list' %}" class="text-primary text-sm flex items-center">
-                View All
+                {% trans "View All" %}
                 <i class='bx bx-chevron-right'></i>
             </a>
         </div>
@@ -88,14 +89,14 @@
                     </div>
                     <div class="text-right">
                         <p class="text-primary font-bold text-lg">+{{ task.points }}</p>
-                        <p class="text-gray-400 text-xs">{{ task.cfa_value }} CFA</p>
+                        <p class="text-gray-400 text-xs">${{ task.usd_value }}</p>
                     </div>
                 </div>
                 
                 <div class="flex items-center justify-between text-xs text-gray-500">
                     <span>
                         <i class='bx bx-check-circle'></i>
-                        {{ task.current_completions }}/{{ task.max_completions }} completed
+                        {% blocktrans with current=task.current_completions max=task.max_completions %}{{ current }}/{{ max }} completed{% endblocktrans %}
                     </span>
                     <i class='bx bx-chevron-right text-primary text-xl'></i>
                 </div>
@@ -105,15 +106,15 @@
         {% else %}
         <div class="card p-8 rounded-xl text-center">
             <i class='bx bx-sad text-6xl text-gray-600 mb-3'></i>
-            <p class="text-gray-400">No tasks available right now</p>
-            <p class="text-gray-500 text-sm mt-2">Check back later for new tasks</p>
+            <p class="text-gray-400">{% trans "No tasks available right now" %}</p>
+            <p class="text-gray-500 text-sm mt-2">{% trans "Check back later for new tasks" %}</p>
         </div>
         {% endif %}
     </div>
     
     {% if recent_completions %}
     <div class="mb-6">
-        <h2 class="text-xl font-bold text-white mb-4 font-slab">Recent Activity</h2>
+        <h2 class="text-xl font-bold text-white mb-4 font-slab">{% trans "Recent Activity" %}</h2>
         
         <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
             {% for completion in recent_completions %}
@@ -125,12 +126,12 @@
                         </div>
                         <div>
                             <p class="text-white font-medium text-sm">{{ completion.task.title }}</p>
-                            <p class="text-gray-500 text-xs">{{ completion.completed_at|timesince }} ago</p>
+                            <p class="text-gray-500 text-xs">{% blocktrans with time=completion.completed_at|timesince %}{{ time }} ago{% endblocktrans %}</p>
                         </div>
                     </div>
                     <div class="text-right">
                         <p class="text-primary font-bold">+{{ completion.points_earned }}</p>
-                        <p class="text-gray-400 text-xs">{{ completion.cfa_earned }} CFA</p>
+                        <p class="text-gray-400 text-xs">${{ completion.usd_earned }}</p>
                     </div>
                 </div>
             </div>

@@ -1,0 +1,91 @@
+{% extends 'influencer/influencer_base.html' %}
+{% load i18n %}
+
+{% block title %}{% trans "My Tasks" %} - Ken Influencer{% endblock %}
+
+{% block content %}
+<div class="space-y-6">
+    <div class="flex flex-col md:flex-row md:items-center md:justify-between">
+        <h1 class="text-3xl font-bold mb-4 md:mb-0">{% trans "My Tasks" %}</h1>
+        <a href="{% url 'influencer_task_create' %}" class="inline-flex items-center px-6 py-3 bg-primary hover:bg-green-600 text-black font-bold rounded-lg transition">
+            <i class='bx bx-plus-circle text-xl mr-2'></i>
+            {% trans "Create New Task" %}
+        </a>
+    </div>
+    
+    <div class="flex flex-wrap gap-3">
+        <a href="?status=all" class="px-4 py-2 rounded-lg transition {% if current_status == 'all' %}bg-primary text-black font-semibold{% else %}bg-gray-800 text-gray-300 hover:bg-gray-700{% endif %}">
+            {% trans "All" %}
+        </a>
+        <a href="?status=active" class="px-4 py-2 rounded-lg transition {% if current_status == 'active' %}bg-primary text-black font-semibold{% else %}bg-gray-800 text-gray-300 hover:bg-gray-700{% endif %}">
+            {% trans "Active" %}
+        </a>
+        <a href="?status=paused" class="px-4 py-2 rounded-lg transition {% if current_status == 'paused' %}bg-primary text-black font-semibold{% else %}bg-gray-800 text-gray-300 hover:bg-gray-700{% endif %}">
+            {% trans "Paused" %}
+        </a>
+        <a href="?status=completed" class="px-4 py-2 rounded-lg transition {% if current_status == 'completed' %}bg-primary text-black font-semibold{% else %}bg-gray-800 text-gray-300 hover:bg-gray-700{% endif %}">
+            {% trans "Completed" %}
+        </a>
+    </div>
+    
+    {% if tasks %}
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        {% for task in tasks %}
+        <div class="card rounded-xl overflow-hidden hover:shadow-xl transition">
+            <div class="aspect-video bg-gray-900 relative">
+                <iframe 
+                    src="{{ task.get_embed_url }}" 
+                    class="w-full h-full"
+                    frameborder="0"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                    allowfullscreen
+                ></iframe>
+            </div>
+            
+            <div class="p-6">
+                <div class="flex items-start justify-between mb-3">
+                    <h3 class="font-bold text-lg line-clamp-2 flex-1">{{ task.title }}</h3>
+                    <span class="ml-2 text-xs px-2 py-1 rounded flex-shrink-0 {% if task.status == 'active' %}bg-green-900/30 text-green-300{% elif task.status == 'paused' %}bg-yellow-900/30 text-yellow-300{% else %}bg-gray-700 text-gray-300{% endif %}">
+                        {{ task.get_status_display }}
+                    </span>
+                </div>
+                
+                <div class="space-y-2 mb-4">
+                    <div class="flex items-center justify-between text-sm">
+                        <span class="text-gray-400">{% trans "Type" %}:</span>
+                        <span class="font-semibold">{{ task.get_task_type_display }}</span>
+                    </div>
+                    <div class="flex items-center justify-between text-sm">
+                        <span class="text-gray-400">{% trans "Reward" %}:</span>
+                        <span class="font-semibold text-primary">${{ task.usd_value }} / {{ task.points }}pts</span>
+                    </div>
+                    <div class="flex items-center justify-between text-sm">
+                        <span class="text-gray-400">{% trans "Progress" %}:</span>
+                        <span class="font-semibold">{{ task.current_completions }}/{{ task.max_completions }}</span>
+                    </div>
+                </div>
+                
+                <div class="w-full bg-gray-800 rounded-full h-2 mb-4">
+                    <div class="bg-primary h-2 rounded-full" style="width: {% widthratio task.current_completions task.max_completions 100 %}%"></div>
+                </div>
+                
+                <a href="{% url 'influencer_task_detail' task.id %}" class="block w-full text-center px-4 py-2 bg-gray-800 hover:bg-primary hover:text-black text-gray-300 font-semibold rounded-lg transition">
+                    {% trans "View Details" %}
+                </a>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    {% else %}
+    <div class="card rounded-xl p-12 text-center">
+        <i class='bx bx-task text-6xl text-gray-700 mb-4'></i>
+        <h3 class="text-xl font-bold mb-2">{% trans "No tasks found" %}</h3>
+        <p class="text-gray-400 mb-6">{% trans "Create your first task to get started!" %}</p>
+        <a href="{% url 'influencer_task_create' %}" class="inline-flex items-center px-6 py-3 bg-primary hover:bg-green-600 text-black font-bold rounded-lg transition">
+            <i class='bx bx-plus-circle text-xl mr-2'></i>
+            {% trans "Create Task" %}
+        </a>
+    </div>
+    {% endif %}
+</div>
+{% endblock %}
